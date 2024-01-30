@@ -1,19 +1,16 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
-import mocha from "mocha";
-import fs from "fs";
-import path from "path";
 import app from "../app";
 
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe("Task Api", () => {
+describe("Notification Api", () => {
   before(async () => {});
   it("insert a new notification", (done) => {
     chai
       .request(app)
-      .post("/api/task")
+      .post("/api/notification")
       .field("_id", 1)
       .field("title", "3 dias")
       .field("description", "Te quedan tres dias para el tiempo limite")
@@ -30,7 +27,7 @@ describe("Task Api", () => {
   it("get one notification", (done) => {
     chai
       .request(app)
-      .get("/api/task/1")
+      .get("/api/notification/1")
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property("title", "3 dias");
