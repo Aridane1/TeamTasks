@@ -1,6 +1,7 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+import taskRouter from "./routes/task.routes";
 
 const app = express();
 
@@ -14,5 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(morgan("dev"));
+
+app.use("/api/task", taskRouter);
 
 export default app;
