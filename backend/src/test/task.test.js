@@ -24,7 +24,7 @@ describe("Task Api", () => {
       )
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property("name", "GitHub Clone");
+        expect(res.body).to.have.property("title", "GitHub Clone");
         expect(res.body).to.have.property("description", "Example of GitHub");
         done();
       });
@@ -38,15 +38,6 @@ describe("Task Api", () => {
         done();
       });
   });
-  it("delete one task", (done) => {
-    chai
-      .request(app)
-      .delete("/api/task/1")
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
   it("put one task", (done) => {
     chai
       .request(app)
@@ -55,8 +46,17 @@ describe("Task Api", () => {
       .field("description", "Example of Twitter")
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property("name", "Twitter Clone");
+        expect(res.body).to.have.property("title", "Twitter Clone");
         expect(res.body).to.have.property("description", "Example of Twitter");
+        done();
+      });
+  });
+  it("delete one task", (done) => {
+    chai
+      .request(app)
+      .delete("/api/task/1")
+      .end((err, res) => {
+        expect(res).to.have.status(200);
         done();
       });
   });
