@@ -28,3 +28,7 @@ Configurations(**ID**,night_mode,list_mode,user_image,\_user_email*)
 ### DIAGRAMA DE ENTIDAD RELACION
 
 ![USE CASE DIAGRAM](https://github.com/Aridane1/TeamTasks/blob/main/screenshots/relation_ship_diagram.PNG)
+
+## ENLACE FIGMA
+Aqui esta el enlace al mockup del proyecto en figma.
+https://www.figma.com/file/GxKQPAY7v7WyOuNTAJrT1H/TeamTask?type=design&node-id=0%3A1&mode=design&t=twyyncxV7omc5vg3-1
