@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import path from "path";
+
 import taskRouter from "./routes/task.routes";
 import userRouter from "./routes/user.routes";
 import verifyToken from "./middlewares/verifyToken.middleware";
@@ -12,6 +14,8 @@ let corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
