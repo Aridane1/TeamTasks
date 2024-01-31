@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -5,6 +6,8 @@ import path from "path";
 
 import taskRouter from "./routes/task.routes";
 import userRouter from "./routes/user.routes";
+import configurationRouter from "./routes/configuration.routes";
+
 import verifyToken from "./middlewares/verifyToken.middleware";
 
 const app = express();
@@ -26,5 +29,6 @@ app.use(morgan("dev"));
 
 app.use("/api/task", taskRouter);
 app.use("/api/user", userRouter);
+app.use("/api/configuration", configurationRouter);
 
 export default app;

@@ -7,9 +7,9 @@ const notificationSchema = new Schema(
       required: true,
     },
     description: {
-        type: String,
-        required: true,
-      }
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
