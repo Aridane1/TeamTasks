@@ -1,4 +1,4 @@
-import Notification from "../models/notification.model";
+import TaskNotification from "../models/taskNotification.model";
 
 export const addTaskNotification = async (req, res) => {
   try {
