@@ -14,7 +14,7 @@ import taskNotificationRouter from "./routes/taskNotification.routes";
 import userTaskRouter from "./routes/userTask.routes";
 
 import verifyToken from "./middlewares/verifyToken.middleware";
-import { schemaUtils } from "./utils/schemaUtils";
+import { deleteSchemas } from "./utils/schemaUtils";
 
 const app = express();
 
@@ -42,9 +42,6 @@ app.use("/api/tagTask", tagTaskRouter);
 app.use("/api/taskNotification", taskNotificationRouter);
 app.use("/api/userTask", userTaskRouter);
 
-const db = mongoose.connection;
-db.once("open", async () => {
-  schemaUtils();
-});
+deleteSchemas();
 
 export default app;
