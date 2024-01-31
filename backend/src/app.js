@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -5,6 +6,7 @@ import path from "path";
 
 import taskRouter from "./routes/task.routes";
 import userRouter from "./routes/user.routes";
+import configurationRouter from "./routes/configuration.routes";
 import notificationRouter from "./routes/notification.routes";
 import tagRouter from "./routes/tag.routes";
 import tagTaskRouter from "./routes/tagTask.routes";
@@ -32,6 +34,7 @@ app.use(morgan("dev"));
 
 app.use("/api/task", taskRouter);
 app.use("/api/user", userRouter);
+app.use("/api/configuration", configurationRouter);
 app.use("/api/notification", notificationRouter);
 app.use("/api/tag", tagRouter);
 app.use("/api/tagTask", tagTaskRouter);
