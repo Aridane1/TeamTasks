@@ -5,6 +5,12 @@ import path from "path";
 
 import taskRouter from "./routes/task.routes";
 import userRouter from "./routes/user.routes";
+import notificationRouter from "./routes/notification.routes";
+import tagRouter from "./routes/tag.routes";
+import tagTaskRouter from "./routes/tagTask.routes";
+import taskNotificationRouter from "./routes/taskNotification.routes";
+import userTaskRouter from "./routes/userTask.routes";
+
 import verifyToken from "./middlewares/verifyToken.middleware";
 
 const app = express();
@@ -26,5 +32,10 @@ app.use(morgan("dev"));
 
 app.use("/api/task", taskRouter);
 app.use("/api/user", userRouter);
+app.use("/api/notification", notificationRouter);
+app.use("/api/tag", tagRouter);
+app.use("/api/tagTask", tagTaskRouter);
+app.use("/api/taskNotification", taskNotificationRouter);
+app.use("/api/userTask", userTaskRouter);
 
 export default app;
