@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import Configuration from "../models/configuration.model";
 import Task from "../models/task.model";
 import Tag from "../models/tag.model";
@@ -7,7 +9,14 @@ import TagTask from "../models/tagTask.model";
 import TaskNotification from "../models/taskNotification.model";
 import UserTask from "../models/userTask.model";
 
-export const schemaUtils = async () => {
+export const deleteSchemas = () => {
+  const db = mongoose.connection;
+  db.once("open", async () => {
+    schemaUtils();
+  });
+};
+
+const schemaUtils = async () => {
   try {
     await Task.deleteMany();
     await Configuration.deleteMany();
