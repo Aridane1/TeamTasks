@@ -24,8 +24,3 @@ export const getCleanUser = (userData) => {
     password: userData.password,
   };
 };
-
-module.exports = {
-  generateToken,
-  getCleanUser,
-};

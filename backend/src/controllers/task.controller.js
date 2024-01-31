@@ -13,6 +13,19 @@ export const addTask = async (req, res) => {
   }
 };
 
+export const addTaskWithPhoto = async (req, res) => {
+  try {
+    let task = Task(req.body);
+    await task.save();
+    res.send({ message: task });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      message: "Hubo un error al guardar",
+    });
+  }
+};
+
 export const getOneTask = async (req, res) => {
   try {
     let { id } = req.params;
