@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import taskRouter from "./routes/task.routes";
 import userRouter from "./routes/user.routes";
+import verifyToken from "./middlewares/verifyToken.middleware";
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use(verifyToken);
 
 app.use(morgan("dev"));
 
