@@ -11,6 +11,7 @@ const configurationSchema = new Schema(
     user_image: {
       type: String,
     },
+
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "Users",
