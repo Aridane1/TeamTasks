@@ -10,6 +10,10 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
+    limit_day: {
+      type: String,
+      required: true,
+    },
     task_image: {
       type: String,
     },
