@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        navbar: "#16282e",
+        navbar: "#16282E",
       },
     },
   },
