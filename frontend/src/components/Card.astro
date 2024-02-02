@@ -1,0 +1,24 @@
+---
+interface Props {
+  description: string;
+  title: string;
+}
+
+const { description, title } = Astro.props;
+---
+
+<div class="size-80">
+  <div class="relative">
+    <div class="flex justify-between">
+      <p>{title}</p>
+      <p>{title}</p>
+    </div>
+    <img class="rounded max-h-full max-w-full" src="/images/image.png" alt="" />
+    <div class="w-full flex justify-center">
+      <div
+        class="absolute -bottom-3 rounded-full w-[90%] h-[25px] bg-green-400"
+      >
+      </div>
+    </div>
+  </div>
+</div>
