@@ -1,9 +1,9 @@
-import app from "./app";
+import server from "./wsServer";
 import "./database";
 import { PORT } from "./config";
 import { notifyDeadlineApproaching } from "./utils/sendNotificationsUtils";
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Server running in port", PORT);
   // setInterval(() => {
   //   const now = new Date();
