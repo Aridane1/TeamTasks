@@ -3,17 +3,17 @@ import morgan from "morgan";
 import cors from "cors";
 import path from "path";
 
-import taskRouter from "./routes/task.routes";
-import userRouter from "./routes/user.routes";
-import configurationRouter from "./routes/configuration.routes";
-import tagRouter from "./routes/tag.routes";
-import tagTaskRouter from "./routes/tagTask.routes";
-import userTaskRouter from "./routes/userTask.routes";
-import deviceRouter from "./routes/device.routes";
+import taskRouter from "../routes/task.routes";
+import userRouter from "../routes/user.routes";
+import configurationRouter from "../routes/configuration.routes";
+import tagRouter from "../routes/tag.routes";
+import tagTaskRouter from "../routes/tagTask.routes";
+import userTaskRouter from "../routes/userTask.routes";
+import deviceRouter from "../routes/device.routes";
 
-import verifyToken from "./middlewares/verifyToken.middleware";
+import verifyToken from "../middlewares/verifyToken.middleware";
 import "./webpushConfig";
-import { deleteSchemas } from "./utils/schemaUtils";
+import { deleteSchemas } from "../utils/schemaUtils";
 
 const app = express();
 

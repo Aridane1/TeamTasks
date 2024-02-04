@@ -1,6 +1,6 @@
 // src/config/webpushConfig.js
 import webpush from "web-push";
-import { PRIVATE_VAPID_KEY, PUBLIC_VAPID_KEY } from "./config";
+import { PRIVATE_VAPID_KEY, PUBLIC_VAPID_KEY } from "./envConfig";
 
 const vapidKeys = {
   publicKey: PUBLIC_VAPID_KEY,

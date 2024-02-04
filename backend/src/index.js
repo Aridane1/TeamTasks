@@ -1,6 +1,6 @@
-import server from "./wsServer";
-import "./database";
-import { PORT } from "./config";
+import server from "./config/wsServer";
+import "./config/database";
+import { PORT } from "./config/envConfig";
 import { notifyDeadlineApproaching } from "./utils/sendNotificationsUtils";
 
 server.listen(PORT, () => {
