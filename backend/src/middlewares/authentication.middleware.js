@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 import { generateToken, getCleanUser } from "../utils/jwtUtils";
-import { JWT_SECRET } from "../config";
+import { JWT_SECRET } from "../config/envConfig";
 
 import User from "../models/user.model";
 

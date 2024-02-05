@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config";
+import { JWT_SECRET } from "../config/envConfig";
 
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
