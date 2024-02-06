@@ -8,9 +8,9 @@ import User from "../models/user.model";
 
 export const signin = async (req, res) => {
   try {
+    console.log(req.body);
     const email = req.body.email;
     const pwd = req.body.password;
-    console.log(req.body.email);
 
     if (!email || !pwd) {
       return res.status(400).json({
