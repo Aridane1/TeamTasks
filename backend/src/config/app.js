@@ -23,7 +23,9 @@ let corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(express.static(path.join(__dirname, "..","public")));
+
+app.use(express.static(path.join(__dirname, "..", "public")));
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -39,7 +41,6 @@ app.use("/api/tag", tagRouter);
 app.use("/api/tagTask", tagTaskRouter);
 app.use("/api/userTask", userTaskRouter);
 app.use("/api/device", deviceRouter);
-
 // deleteSchemas();
 
 export default app;
