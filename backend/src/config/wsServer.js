@@ -1,23 +1,38 @@
 import { Server } from "ws";
-import http from "http";
+import { createServer } from "http";
 import app from "./app";
 
-const server = http.createServer();
+const server = createServer();
 const wsServer = new Server({
   server: server,
 });
 
-server.on("request", app);
-wsServer.on("connection", function connection(ws) {
-  ws.on("message", function incoming(message) {
-    console.log(`received: ${message}`);
+const connections = [];
 
-    ws.send(
-      JSON.stringify({
-        answer: 42,
-      })
-    );
+server.on("request", app);
+
+wsServer.on("connection", (socket) => {
+  console.log("Client connected.");
+
+  connections.push(socket);
+
+  socket.on("message", (message) => {
+    const textMessage = message.toString("utf-8");
+
+    connections.forEach((conn) => {
+      if (conn.readyState === socket.OPEN) {
+        conn.send(textMessage);
+      }
+    });
+  });
+
+  socket.on("close", () => {
+    console.log("Client disconnected.");
+
+    const index = connections.indexOf(socket);
+    if (index > -1) {
+      connections.splice(index, 1);
+    }
   });
 });
-
 export default server;
