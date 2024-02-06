@@ -1,5 +1,6 @@
 import User from "../models/user.model";
 import bcrypt from "bcryptjs";
+import { generateToken, getCleanUser } from "../utils/jwtUtils";
 
 export const addUser = async (req, res) => {
   try {
@@ -7,7 +8,9 @@ export const addUser = async (req, res) => {
 
     let existUser = await User.findOne({ email: email });
     if (existUser) {
-      return res.status(409).json("Email already exists");
+      const token = generateToken(existUser);
+      const userObj = getCleanUser(existUser);
+      return res.status(409).json({ user: userObj, access_token: token });
     }
     let newUser = {
       username: username,
@@ -17,7 +20,9 @@ export const addUser = async (req, res) => {
     newUser.password = bcrypt.hashSync(password);
     let user = User(newUser);
     await user.save();
-    res.status(200).send({ message: user });
+    const token = generateToken(user);
+
+    res.status(200).send({ user: user, access_token: token });
   } catch (err) {
     console.log(err);
     res.status(500).send({
