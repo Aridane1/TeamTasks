@@ -15,6 +15,7 @@ export const addTask = async (req, res) => {
 
 export const addTaskWithPhoto = async (req, res) => {
   try {
+    req.body.task_image = req.file.filename;  
     let task = Task(req.body);
     await task.save();
     res.send({ message: task });
