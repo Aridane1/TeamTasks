@@ -35,4 +35,14 @@ async function login(user: User) {
   }
 }
 
-export default { login };
+async function register(user: User) {
+  try {
+    const response = await axios.post(`${baseURL}`, user.username, getOptions(user));
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+export default { login,register };
