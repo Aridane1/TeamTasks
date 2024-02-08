@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import TaskService from "../services/TaskService";
 
 interface Task {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   task_image?: string;
@@ -32,7 +32,7 @@ export default function Home() {
       <Header />
       <div>
         {tasks.map((task) => (
-          <Card key={task.id} task={task} />
+          <Card key={task._id} task={task} />
         ))}
       </div>
       <Navbar />

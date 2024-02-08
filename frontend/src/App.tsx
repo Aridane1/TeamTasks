@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateTask from "./pages/CreateTask";
 import Meeter from "./pages/Meeter";
+import ViewTask from "./pages/ViewTask";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/createTask" element={<CreateTask />} />
         <Route path="/meeter" element={<Meeter />} />
+        <Route path="/viewTask" element={<ViewTask />} />
       </Routes>
     </Router>
   );
