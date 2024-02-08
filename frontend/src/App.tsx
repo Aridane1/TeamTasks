@@ -6,6 +6,7 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateTask from "./pages/CreateTask";
+import Meeter from "./pages/Meeter";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/createTask" element={<CreateTask />} />
+        <Route path="/meeter" element={<Meeter />} />
       </Routes>
     </Router>
   );

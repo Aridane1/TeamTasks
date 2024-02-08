@@ -8,8 +8,7 @@ interface Task {
   id: string;
   title: string;
   description: string;
-  task_image?:string;
-
+  task_image?: string;
 }
 
 export default function Home() {
