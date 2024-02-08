@@ -37,7 +37,11 @@ async function login(user: User) {
 
 async function register(user: User) {
   try {
-    const response = await axios.post(`${baseURL}`, user.username, getOptions(user));
+    const response = await axios.post(
+      `${baseURL}`,
+      user.username,
+      getOptions(user)
+    );
     return response.data;
   } catch (err) {
     console.error(err);
@@ -45,4 +49,4 @@ async function register(user: User) {
   }
 }
 
-export default { login,register };
+export default { login, register };
