@@ -1,7 +1,22 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig, createServer as createViteServer } from "vite";
+import https from "https";
+import fs from "fs";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  server: {
+    https: {
+      key: fs.readFileSync("./.cert/cert.key"),
+      cert: fs.readFileSync("./.cert/cert.crt"),
+    },
+  },
+});
+
+export const createServer = (options) => {
+  return https.createServer(
+    {
+      key: fs.readFileSync("./.cert/cert.key"),
+      cert: fs.readFileSync("./.cert/cert.crt"),
+    },
+    createViteServer(options)
+  );
+};
