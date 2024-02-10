@@ -1,11 +1,7 @@
 import { FormEvent, useRef } from "react";
 import AuthService from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
-interface User {
-  email: string;
-  password: string;
-  username?: string;
-}
+
 export default function Login() {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
