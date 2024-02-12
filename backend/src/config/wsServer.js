@@ -8,7 +8,7 @@ import { USING_HTTPS } from "./envConfig";
 
 let server = null;
 
-if (USING_HTTPS === true) {
+if (USING_HTTPS) {
   const CERTS = {
     key: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.key")),
     cert: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.crt")),

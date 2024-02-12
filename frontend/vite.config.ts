@@ -28,9 +28,6 @@ export default defineConfig({
       },
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "manifest.json", "icons/*"],
-      workbox: {
-        // Workbox options
-      },
     }),
   ],
   server: {

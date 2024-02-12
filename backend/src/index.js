@@ -5,8 +5,8 @@ import { notifyDeadlineApproaching } from "./utils/sendNotificationsUtils";
 
 server.listen(PORT, () => {
   console.log("Server running in port", PORT);
-  // setInterval(() => {
-  //   const now = new Date();
-  //   notifyDeadlineApproaching(now);
-  // }, 5000);
+  setInterval(() => {
+    const now = new Date();
+    notifyDeadlineApproaching(now);
+  }, 24 * 60 * 60 * 1000);
 });

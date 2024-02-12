@@ -2,7 +2,12 @@ import Device from "../models/device.model";
 
 export const addDevice = async (req, res) => {
   try {
-    let device = Device(req.body);
+    let deviceUser = {
+      endpoint: req.body.subscription.endpoint,
+      keys: req.body.subscription.keys,
+      user_id: req.body.user_id,
+    };
+    let device = Device(deviceUser);
     await device.save();
     res.send({ messasge: device });
   } catch (err) {

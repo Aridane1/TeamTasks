@@ -6,8 +6,14 @@ const deviceSchema = new Schema({
     required: true,
   },
   keys: {
-    type: String,
-    required: true,
+    p256dh: {
+      type: String,
+      required: true,
+    },
+    auth: {
+      type: String,
+      required: true,
+    },
   },
   user_id: {
     type: Schema.Types.ObjectId,

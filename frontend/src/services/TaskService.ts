@@ -6,7 +6,7 @@ async function getAllTasks() {
     const response = await axios.get(`${baseURL}/task`);
     return response.data;
   } catch (error) {
-    console.error("Error en TaskService",error);
+    console.error("Error en TaskService", error);
   }
 }
 
