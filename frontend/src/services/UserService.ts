@@ -1,8 +1,8 @@
 import axios from "axios";
-const baseURL = "http://localhost:8080/api/user";
+import { backendAuthEnpoint } from "../constants/backendEnpoints";
 
 async function getAllUsers() {
-  const response = await axios.get(baseURL);
+  const response = await axios.get(backendAuthEnpoint);
   return response.data;
 }
 

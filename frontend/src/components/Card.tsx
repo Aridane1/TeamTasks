@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { backendImageEndpoint } from "../constants/backendEnpoints";
 
 interface TaskProps {
   task: {
@@ -17,7 +18,7 @@ export default function Card({ task }: TaskProps) {
   };
 
   return (
-    <div className="size-80" onClick={handleClick}> 
+    <div className="size-80" onClick={handleClick}>
       <div className="relative">
         <div className="flex justify-between">
           <p>{task.title}</p>
@@ -25,12 +26,11 @@ export default function Card({ task }: TaskProps) {
         </div>
         <img
           className="rounded max-h-full max-w-full"
-          src={`http://localhost:8080/images/${task.task_image}`}
-          alt={task.title} 
+          src={`${backendImageEndpoint}/${task.task_image}`}
+          alt={task.title}
         />
         <div className="w-full flex justify-center">
-          <div className="absolute -bottom-3 rounded-full w-[90%] h-[25px] bg-green-400">
-          </div>
+          <div className="absolute -bottom-3 rounded-full w-[90%] h-[25px] bg-green-400"></div>
         </div>
       </div>
     </div>
