@@ -73,7 +73,7 @@ export default function Register() {
         />
         </div>
         <div className="flex flex-col items-center h-full w-2/4 justify-center">
-          <h1 className="text-8xl mt-14">Grande</h1>
+          <h1 className="text-8xl mt-14">Registro</h1>
 
           <form className="flex flex-col w-fit mt-10" onSubmit={handleSubmit}>
             <label className="text-3xl my-2">Nombre de usuario</label>

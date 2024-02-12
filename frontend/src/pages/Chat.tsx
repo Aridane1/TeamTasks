@@ -8,8 +8,8 @@ export default function Chat() {
         <p className="text-5xl text-white">El bicho</p>
         <img src="/images/icons/userIcon.svg" />
       </header>
-      <div className="bg-navbar h-24 fixed w-full top-[90.5%] flex items-center justify-center">
-        <input className="w-[90%] rounded-full h-14" />
+      <div className="bg-navbar h-24 md:h-16 md:mt-7 fixed w-full top-[90.5%] flex items-center justify-center">
+        <input className="w-[90%] md:h-10 rounded-full h-14" />
       </div>
     </div>
   );
