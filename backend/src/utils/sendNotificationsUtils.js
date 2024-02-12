@@ -1,7 +1,7 @@
 import Task from "../models/task.model";
 import UserTask from "../models/userTask.model";
 import Device from "../models/device.model";
-import { sendNotification } from "web-push";
+import webpush from "../config/webpushConfig";
 
 export const notifyDeadlineApproaching = async (currentDay) => {
   try {
@@ -9,7 +9,7 @@ export const notifyDeadlineApproaching = async (currentDay) => {
 
     tasksTimeLimit.forEach(async (task) => {
       const daysRemaining = calculateDaysRemaining(currentDay, task.limit_day);
-      let message = `Te quedan  ${daysRemaining} ${
+      let message = `Te quedan ${daysRemaining} ${
         daysRemaining == 1 ? "día" : "días"
       } para terminar la tarea "${task.title}"`;
       if (daysRemaining <= 3) {
@@ -60,7 +60,7 @@ const getAllDeviceForUserId = async (user) => {
 const sendNotificationToUser = async (title, message, endpoint, keys) => {
   let subscriptionUser = {
     endpoint: endpoint,
-    keys: JSON.parse(keys),
+    keys: keys,
   };
 
   let payload = {
