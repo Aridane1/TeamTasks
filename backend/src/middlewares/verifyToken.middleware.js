@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config";
+import { JWT_SECRET } from "../config/envConfig";
 
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
-
+  console.log(req.headers);
   if (!token) return next();
 
   if (req.headers.authorization.indexOf("Basic ") === 0) {
+    console.log("prueba");
     handleBasicAuth(req, next);
   } else {
     handleBearerToken(req, res, next, token);

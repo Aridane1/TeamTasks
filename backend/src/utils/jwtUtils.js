@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config";
+import { JWT_SECRET } from "../config/envConfig";
 
 export const generateToken = (userData) => {
   if (!userData) return null;
 
   var user = {
+    id: userData._id,
     username: userData.username,
     email: userData.email,
     password: userData.password,
@@ -19,13 +20,9 @@ export const getCleanUser = (userData) => {
   if (!userData) return null;
 
   return {
+    id: userData._id,
     username: userData.username,
     email: userData.email,
     password: userData.password,
   };
-};
-
-module.exports = {
-  generateToken,
-  getCleanUser,
 };
