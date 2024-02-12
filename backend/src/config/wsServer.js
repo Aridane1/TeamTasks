@@ -1,34 +1,29 @@
-import { Server } from "ws";
 import http from "http";
 import https from "https";
 import fs from "fs";
 import path from "path";
+import { Server as WebSocketServer } from "ws";
 import app from "./app";
 import { USING_HTTPS } from "./envConfig";
 
 let server = null;
 
-if (USING_HTTPS) {
-  const CERTS = () => {
-    try {
-      return {
-        key: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.key")),
-        cert: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.crt")),
-      };
-    } catch (err) {
-      console.log("No certificates found: " + err);
-    }
+if (USING_HTTPS === true) {
+  const CERTS = {
+    key: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.key")),
+    cert: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.crt")),
   };
-  server = https.createServer(CERTS());
+  server = https.createServer(CERTS);
 } else {
   server = http.createServer();
 }
 
-const wsServer = new Server({
+const wsServer = new WebSocketServer({
   server: server,
 });
 
 server.on("request", app);
+
 wsServer.on("connection", function connection(ws) {
   ws.on("message", function incoming(message) {
     console.log(`received: ${message}`);
