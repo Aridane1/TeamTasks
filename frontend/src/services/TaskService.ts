@@ -1,9 +1,9 @@
 import axios from "axios";
-const baseURL = "http://localhost:8080/api";
+import { backendTaskEnpoint } from "../constants/backendEnpoints";
 
 async function getAllTasks() {
   try {
-    const response = await axios.get(`${baseURL}/task`);
+    const response = await axios.get(`${backendTaskEnpoint}`);
     return response.data;
   } catch (error) {
     console.error("Error en TaskService", error);

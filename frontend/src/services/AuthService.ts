@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://localhost:8080/api/user";
+import { backendAuthEnpoint } from "../constants/backendEnpoints";
 
 interface User {
   username?: string;
@@ -25,7 +25,7 @@ function getOptions(user: User) {
 async function login(user: User) {
   try {
     const response = await axios.post(
-      `${baseURL}/signin`,
+      `${backendAuthEnpoint}/signin`,
       {},
       getOptions(user)
     );
@@ -38,7 +38,7 @@ async function login(user: User) {
 async function register(user: User) {
   try {
     const response = await axios.post(
-      `${baseURL}`,
+      `${backendAuthEnpoint}`,
       user.username,
       getOptions(user)
     );
