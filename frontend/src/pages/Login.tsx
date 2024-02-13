@@ -8,12 +8,24 @@ export default function Login() {
   const emailDesktop = useRef<HTMLInputElement>(null);
   const passwordDesktop = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+
+  const handleSubmitMovil = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const userEmail =
-      emailMobile.current?.value ?? emailDesktop.current?.value ?? "";
-    const userPassword =
-      passwordMobile.current?.value ?? passwordDesktop.current?.value ?? "";
+    const userEmail = emailMobile.current?.value ?? "";
+    const userPassword = passwordMobile.current?.value ?? "";
+    AuthService.login({
+      email: userEmail,
+      password: userPassword,
+    }).then((data) => {
+      localStorage.setItem("token", data.access_token);
+      navigate("/home");
+    });
+  };
+
+  const handleSubmitDescktop = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const userEmail = emailDesktop.current?.value ?? "";
+    const userPassword = passwordDesktop.current?.value ?? "";
     AuthService.login({
       email: userEmail,
       password: userPassword,
@@ -29,7 +41,10 @@ export default function Login() {
         <h1 className="text-8xl mt-14">Inicio</h1>
         <img className="size-48 mt-10" src="images/TeamTaskRecortado.png" />
         <div>
-          <form className="flex flex-col w-fit mt-16" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col w-fit mt-16"
+            onSubmit={handleSubmitMovil}
+          >
             <label className="text-3xl my-3">Correo electrónico</label>
             <input
               className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
@@ -60,7 +75,10 @@ export default function Login() {
           <h1 className="text-8xl mt-14">Inicio</h1>
 
           <div>
-            <form className="flex flex-col w-fit mt-16" onSubmit={handleSubmit}>
+            <form
+              className="flex flex-col w-fit mt-16"
+              onSubmit={handleSubmitDescktop}
+            >
               <label className="text-3xl my-3">Correo electrónico</label>
               <input
                 className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
