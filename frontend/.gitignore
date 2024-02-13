@@ -3,6 +3,8 @@
 
 # Certificados
 .cert/
+install-key.pem
+install.pem
 
 # Logs
 logs
