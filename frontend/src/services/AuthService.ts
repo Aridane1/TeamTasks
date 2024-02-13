@@ -49,4 +49,17 @@ async function register(user: User) {
   }
 }
 
-export default { login, register };
+function isLoggedIn() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return true;
+  }
+  return false;
+}
+
+async function logout() {
+  localStorage.removeItem("token");
+  return;
+}
+
+export default { login, register, isLoggedIn, logout };
