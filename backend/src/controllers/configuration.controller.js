@@ -55,3 +55,16 @@ export const putConfigurationForUser = async (req, res) => {
     });
   }
 };
+export const addConfigurationWithPhoto = async (req, res) => {
+  try {
+    req.body.user_image = req.file.filename;  
+    let configuration = Configuration(req.body);
+    await configuration.save();
+    res.send({ message: configuration });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      message: "Hubo un error al guardar",
+    });
+  }
+};

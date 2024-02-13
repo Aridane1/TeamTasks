@@ -11,6 +11,7 @@ import tagTaskRouter from "../routes/tagTask.routes";
 import userTaskRouter from "../routes/userTask.routes";
 import deviceRouter from "../routes/device.routes";
 import followersRouter from "../routes/followers.routes";
+import collaboratorsRouter from "../routes/collaborator.routes";
 
 import verifyToken from "../middlewares/verifyToken.middleware";
 import "./webpushConfig";
@@ -43,6 +44,7 @@ app.use("/api/tagTask", tagTaskRouter);
 app.use("/api/userTask", userTaskRouter);
 app.use("/api/device", deviceRouter);
 app.use("/api/followers", followersRouter);
+app.use("/api/collaborators", collaboratorsRouter);
 // deleteSchemas();
 
 export default app;
