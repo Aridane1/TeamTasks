@@ -9,5 +9,5 @@ if ("serviceWorker" in navigator) {
     applicationServerKey: import.meta.env.VITE_VAPID_PUBLIC_KEY,
   });
 
-  deviceService.postDevice(subscription);
+  // deviceService.postDevice(subscription);
 }
