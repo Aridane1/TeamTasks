@@ -1,7 +1,7 @@
 import Task from "../models/task.model";
 import UserTask from "../models/userTask.model";
 import Device from "../models/device.model";
-import webpush from "../config/webpushConfig";
+import webpush from "web-push";
 
 export const notifyDeadlineApproaching = async (currentDay) => {
   try {
@@ -64,11 +64,8 @@ const sendNotificationToUser = async (title, message, endpoint, keys) => {
   };
 
   let payload = {
-    notification: {
-      title: title,
-      body: message,
-      vibrate: [50, 50, 50],
-    },
+    title: title,
+    body: message,
   };
   return webpush.sendNotification(subscriptionUser, JSON.stringify(payload));
 };

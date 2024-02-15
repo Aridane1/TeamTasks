@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
+import { backendImageEndpoint } from "../constants/backendEnpoints";
 
 export default function ViewTask() {
   const location = useLocation();
@@ -17,7 +18,7 @@ export default function ViewTask() {
           <div className=" ">
             {task.task_image && (
               <img
-                src={`http://localhost:8080/images/${task.task_image}`}
+                src={`${backendImageEndpoint}/${task.task_image}`}
                 alt={task.title}
                 className="h-80 w-80 rounded-lg mx-auto mt-6"
               />
@@ -35,7 +36,7 @@ export default function ViewTask() {
               <h2 className="text-5xl">{task.title}</h2>
               {task.task_image && (
                 <img
-                  src={`http://localhost:8080/images/${task.task_image}`}
+                  src={`${backendImageEndpoint}/${task.task_image}`}
                   alt={task.title}
                   className="h-80 w-80 rounded-lg mx-auto mt-6"
                 />

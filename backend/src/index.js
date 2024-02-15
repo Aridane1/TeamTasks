@@ -8,5 +8,5 @@ server.listen(PORT, () => {
   setInterval(() => {
     const now = new Date();
     notifyDeadlineApproaching(now);
-  }, 24 * 60 * 60 * 1000);
+  }, 1000 * 60 * 60 * 24);
 });
