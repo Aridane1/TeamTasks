@@ -2,10 +2,6 @@ import { Schema, model } from "mongoose";
 
 const commentShema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     message: {
       type: String,
       required: true,

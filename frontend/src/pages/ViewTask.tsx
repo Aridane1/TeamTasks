@@ -1,15 +1,33 @@
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import { backendImageEndpoint } from "../constants/backendEnpoints";
+import {
+  backendImageEndpoint,
+  webSocketEndpoint,
+} from "../constants/backendEnpoints";
+import { useEffect, useRef } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export default function ViewTask() {
   const location = useLocation();
+  const token = localStorage.getItem("token") as string;
+  const decode = jwtDecode(token) as { id: string };
+
   const { task } = location.state || {};
+  const ws = useRef<WebSocket | null>(null);
+
+  useEffect(() => {
+    const SERVER_URL = `${webSocketEndpoint}`;
+    ws.current = new WebSocket(SERVER_URL);
+    ws.current.onopen = () => {
+      console.log("WebSocket connection established.");
+    };
+  }, []);
 
   if (!task) {
     return <div>No se encontró la tarea</div>;
   }
+
   return (
     <>
       <div className="">
