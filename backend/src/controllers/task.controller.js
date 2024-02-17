@@ -2,6 +2,11 @@ import Task from "../models/task.model";
 
 export const addTask = async (req, res) => {
   try {
+    if (req.body.description.length > 1500) {
+      return res.status(400).send({
+        message: "La descripcion debe de ser de un maximo de 1500 caracteres",
+      });
+    }
     let task = Task(req.body);
     await task.save();
     res.send({ message: task });
@@ -15,6 +20,11 @@ export const addTask = async (req, res) => {
 
 export const addTaskWithPhoto = async (req, res) => {
   try {
+    if (req.body.description.length > 1500) {
+      return res.status(400).send({
+        message: "La descripcion debe de ser de un maximo de 1500 caracteres",
+      });
+    }
     req.body.task_image = req.file.filename;
     let task = Task(req.body);
     await task.save();
@@ -75,6 +85,11 @@ export const deleteOneTask = async (req, res) => {
 
 export const putOneTask = async (req, res) => {
   try {
+    if (req.body.description.length > 1500) {
+      return res.status(400).send({
+        message: "La descripcion debe de ser de un maximo de 1500 caracteres",
+      });
+    }
     let { id } = req.params;
     await Task.findByIdAndUpdate(id, req.body);
     res.status(200).send({

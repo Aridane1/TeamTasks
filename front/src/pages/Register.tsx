@@ -43,7 +43,7 @@ export default function Register() {
           </h1>
           <img
             className="size-52 sm:size-80 -mt-10"
-            src="/images/TeamTaskRecortado.png"
+            src="/assets/images/TeamTaskRecortado.png"
             alt="Logo"
           />
         </div>

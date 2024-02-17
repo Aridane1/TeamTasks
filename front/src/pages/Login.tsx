@@ -16,7 +16,6 @@ export default function Login() {
     const emailValue = emailRef.current?.input?.value;
     const passwordValue = passwordRef.current?.input?.value;
 
-    console.log(emailValue);
     authService
       .login({ email: emailValue!, password: passwordValue! })
       .then((data) => {
@@ -34,7 +33,7 @@ export default function Login() {
           </h1>
           <img
             className="size-52 sm:size-80 -mt-10"
-            src="/images/TeamTaskRecortado.png"
+            src="/assets/images/TeamTaskRecortado.png"
             alt="Logo"
           />
         </div>
