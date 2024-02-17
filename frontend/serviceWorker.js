@@ -11,3 +11,14 @@ self.addEventListener("install", (event) => {
   );
   self.skipWaiting();
 });
+
+self.addEventListener("push", async (event) => {
+  const message = await event.data.json();
+  let { title, body } = message;
+
+  await event.waitUntil(
+    self.registration.showNotification(title, {
+      body: body,
+    })
+  );
+});

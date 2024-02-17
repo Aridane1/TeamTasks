@@ -2,14 +2,15 @@ import http from "http";
 import https from "https";
 import fs from "fs";
 import path from "path";
-import { Server } from "ws";
+import { Server as WebSocketServer } from "ws";
 import app from "./app";
 import { USING_HTTPS } from "./envConfig";
+import { startWs } from "../controllers/ws.controller";
 
 let server = null;
 
 try {
-  if (USING_HTTPS) {
+  if (USING_HTTPS == "true") {
     const CERTS = {
       key: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.key")),
       cert: fs.readFileSync(path.join(__dirname, "..", ".cert/cert.crt")),
@@ -23,15 +24,12 @@ try {
   process.exit(1);
 }
 
-const wsServer = new Server({ server: server });
+const wsServer = new WebSocketServer({
+  server: server,
+});
+
 server.on("request", app);
 
-wsServer.on("connection", (ws, incoming_request) => {
-  console.log("Conexión WebSocket establecida.");
-});
-
-wsServer.on("error", (error) => {
-  console.error("Error en el servidor WebSocket:", error);
-});
+startWs(wsServer);
 
 export default server;

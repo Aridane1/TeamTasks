@@ -14,7 +14,6 @@ export function startWs(wss) {
 
     const taskId = url.get("task_id");
     const userId = url.get("user_id");
-
     if (!tasks[taskId]) {
       tasks[taskId] = [];
     }
@@ -24,6 +23,7 @@ export function startWs(wss) {
 
     ws.on("message", (message) => {
       const parseMessage = JSON.parse(message);
+      console.log(parseMessage);
       if (parseMessage.type === MESSAGES.SEND_MESSAGES) {
         let newMessage = {
           task_id: taskRef.taskId,

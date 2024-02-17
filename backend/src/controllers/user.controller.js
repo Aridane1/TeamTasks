@@ -3,9 +3,9 @@ import bcrypt from "bcryptjs";
 import { generateToken, getCleanUser } from "../utils/jwtUtils";
 
 export const addUser = async (req, res) => {
+  console.log(req.body);
   try {
     const { username, password, email } = req.body;
-
     let existUser = await User.findOne({ email: email });
     if (existUser) {
       const token = generateToken(existUser);
