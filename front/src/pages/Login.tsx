@@ -72,7 +72,6 @@ export default function Login() {
                 style={{ marginTop: "-20px" }}
                 ref={emailRef}
                 type="email"
-                required
               />
             </div>
             <div className="flex flex-col w-72">
@@ -83,7 +82,6 @@ export default function Login() {
               <Input.Password
                 style={{ marginTop: "-20px" }}
                 ref={passwordRef}
-                required
               />
             </div>
             <div className="flex flex-col w-72 justify-center items-center  mt-12">

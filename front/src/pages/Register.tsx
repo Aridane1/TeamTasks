@@ -69,11 +69,7 @@ export default function Register() {
                 label="Nombre de usuario"
                 style={{ fontWeight: "bold" }}
               ></Form.Item>
-              <Input
-                style={{ marginTop: "-20px" }}
-                ref={userNameRef}
-                required
-              />
+              <Input style={{ marginTop: "-20px" }} ref={userNameRef} />
             </div>
             <div className="flex flex-col w-72">
               <Form.Item<FieldType>
@@ -84,7 +80,6 @@ export default function Register() {
                 style={{ marginTop: "-20px" }}
                 ref={emailRef}
                 type="email"
-                required
               />
             </div>
             <div className="flex flex-col w-72">
@@ -95,7 +90,6 @@ export default function Register() {
               <Input.Password
                 style={{ marginTop: "-20px" }}
                 ref={passwordRef}
-                required
               />
             </div>
             <div className="flex flex-col w-72 justify-center items-center  mt-12">
