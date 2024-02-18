@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="flex flex-col sm:flex-row justify-center align-middle items-center sm:h-[500px] sm:w-[800px] w-[350px] mx-auto  rounded-lg shadow-2xl overflow-hidden">
-        <div className="flex flex-col justify-center items-center w-[400px] bg-red-500 h-full">
+        <div className="flex flex-col justify-center items-center w-[400px] bg-orange-400/70 h-full">
           <h1 className="flex font-bold text-6xl h-24 justify-center mt-5">
             TeamTask
           </h1>

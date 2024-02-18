@@ -1,22 +1,5 @@
 import Task from "../models/task.model";
-
-export const addTask = async (req, res) => {
-  try {
-    if (req.body.description.length > 1500) {
-      return res.status(400).send({
-        message: "La descripcion debe de ser de un maximo de 1500 caracteres",
-      });
-    }
-    let task = Task(req.body);
-    await task.save();
-    res.send({ message: task });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({
-      message: "Hubo un error al guardar",
-    });
-  }
-};
+import UserTask from "../models/userTask.model";
 
 export const addTaskWithPhoto = async (req, res) => {
   try {
@@ -25,8 +8,10 @@ export const addTaskWithPhoto = async (req, res) => {
         message: "La descripcion debe de ser de un maximo de 1500 caracteres",
       });
     }
+
     req.body.task_image = req.file.filename;
     let task = Task(req.body);
+    console.log(task._id);
     await task.save();
     res.send({ message: task });
   } catch (err) {
@@ -71,7 +56,17 @@ export const getAllTasks = async (req, res) => {
 export const deleteOneTask = async (req, res) => {
   try {
     let { id } = req.params;
+    let taskUserIds = (await UserTask.find({ task_id: id }).select("_id")).map(
+      (taskUser) => taskUser._id
+    );
+
+    for (const task of taskUserIds) {
+      console.log(task);
+      await UserTask.findByIdAndDelete(task);
+    }
+
     await Task.findByIdAndDelete(id);
+
     return res
       .status(200)
       .send({ message: "Registro eliminado correctamente" });

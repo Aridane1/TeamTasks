@@ -19,7 +19,7 @@ export default function ViewTask() {
   return (
     <div>
       <Header />
-      <div className="flex mt-20 justify-center items-center bg-red-300 max-w-[1200px] mx-auto rounded-xl shadow">
+      <div className="flex mt-20 justify-center items-center bg-yellow-100 max-w-[1200px] mx-auto rounded-xl shadow">
         <div className="w-full flex mx-auto mt-5">
           <div className="w-[800px] ">
             <div className="relative flex justify-center">

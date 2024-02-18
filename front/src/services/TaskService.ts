@@ -1,5 +1,8 @@
 import axios from "axios";
-import { backendUserTaskEnpoint } from "../constants/backendEndpoints";
+import {
+  backendTaskEnpoint,
+  backendUserTaskEnpoint,
+} from "../constants/backendEndpoints";
 import { decodeToken } from "../utils/shared/globalFunctions";
 
 async function getUserTask() {
@@ -11,5 +14,13 @@ async function getUserTask() {
     console.log(err);
   }
 }
+async function deleteTaskUser({ id }: { id: string }) {
+  try {
+    const response = await axios.delete(`${backendTaskEnpoint}/${id}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-export default { getUserTask };
+export default { getUserTask, deleteTaskUser };

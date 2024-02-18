@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  addTask,
   addTaskWithPhoto,
   deleteOneTask,
   getAllTasks,
@@ -11,7 +10,6 @@ import { multerUltis } from "../middlewares/multerUtlis.middleware";
 
 const router = Router();
 
-router.post("/", addTask);
 router.post("/taskPhoto", multerUltis.single("file"), addTaskWithPhoto);
 router.get("/:id", getOneTask);
 router.get("/", getAllTasks);

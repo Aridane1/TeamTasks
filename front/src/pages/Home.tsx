@@ -31,15 +31,18 @@ export default function Home() {
     <div>
       <Header />
       <div className="flex justify-center mt-10 flex-wrap gap-5 mb-20 w-[90%] mx-auto ">
-        {tasks.map((task) => (
-          <Card
-            title={task.title}
-            description={task.description}
-            image={task.task_image}
-            quantityUser={task.quantityUser}
-            key={task._id}
-          />
-        ))}
+        {tasks.length !== 0
+          ? tasks.map((task) => (
+              <Card
+                id={task._id}
+                title={task.title}
+                description={task.description}
+                image={task.task_image}
+                quantityUser={task.quantityUser}
+                key={task._id}
+              />
+            ))
+          : "No tienes tareas"}
 
         <FloatButton.BackTop />
       </div>
