@@ -17,7 +17,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <img
             src="/assets/icons/chart-simple-solid.svg"
-            alt="statistics"
+            alt="estadisticas"
             className="size-4"
           />
           <span className="text-black hover:text-blue-300 transition-colors duration-300">
@@ -30,7 +30,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <img
             src="/assets/icons/gear-solid.svg"
-            alt="statistics"
+            alt="configuración"
             className="size-4"
           />
           <span className="text-black hover:text-blue-300 transition-colors duration-300">
@@ -41,7 +41,7 @@ export default function Header() {
       <div onClick={handleLogOut} className="flex items-center gap-2">
         <img
           src="/assets/icons/arrow-right-from-bracket-solid.svg"
-          alt="statistics"
+          alt="cerrar sesion"
           className="size-4"
         />
         <span className="text-black hover:text-blue-300 transition-colors duration-300">
@@ -52,7 +52,7 @@ export default function Header() {
   );
 
   return (
-    <div className="flex h-[100px] items-center w-full border-b-2 border-black">
+    <div className="flex h-[100px] items-center w-full border-b-2 border-black select-none">
       <div className="flex items-center justify-center sm:justify-between w-full sm:w-[90%] mx-auto ">
         <Link to={"/home"}>
           <div className="flex items-center">
@@ -66,7 +66,7 @@ export default function Header() {
         <div className="sm:flex gap-5 hidden items-center font-semibold">
           <Link to={"/home"}>Incio</Link>
           <Link to={"/createTask"}>Crear Tarea</Link>
-          <Link to={"/chat"}>Chat</Link>
+          <Link to={"/chatFeed"}>Chat</Link>
           <Popover content={content} trigger="click">
             <img
               src="/assets/icons/profile.svg"

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import { backendImageEndpoint } from "../constants/backendEndpoints";
 
 export default function ViewTask() {
   const location = useLocation();
-  const { title, description, image } = location.state || {};
+  const { title, description, image, quantityUser } = location.state || {};
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -27,7 +27,7 @@ export default function ViewTask() {
                 src={`${backendImageEndpoint}/${image}`}
                 alt={title}
                 className={`size-96 rounded-2xl ${
-                  isHovered ? "blur-[2px]" : ""
+                  isHovered ? "blur-[2px] transition ease-in-out" : ""
                 }`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -38,7 +38,7 @@ export default function ViewTask() {
                 </p>
               )}
             </div>
-            <p className="ml-12 mt-2">+45 usuarios</p>
+            <p className="ml-12 mt-2">{quantityUser} usuarios</p>
           </div>
           <div className="w-full flex flex-col gap-y-8">
             <h1 className="text-6xl">{title}</h1>

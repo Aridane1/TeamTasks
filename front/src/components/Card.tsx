@@ -5,22 +5,29 @@ export const Card = ({
   title,
   description,
   image,
+  quantityUser,
 }: {
   title: string;
   description: string;
   image: string;
+  quantityUser: string;
 }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/viewTask`, {
-      state: { title: title, description: description, image: image },
+      state: {
+        title: title,
+        description: description,
+        image: image,
+        quantityUser: quantityUser,
+      },
     });
   };
 
   return (
     <div
-      className="max-w-sm w-96 rounded overflow-hidden shadow-lg hover:scale-105 transition ease-in-out duration-300 group"
+      className="max-w-sm w-96 rounded overflow-hidden shadow-lg hover:scale-105 transition ease-in-out duration-300 group select-none"
       onClick={handleClick}
     >
       <img
