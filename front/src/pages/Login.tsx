@@ -1,28 +1,46 @@
-import { Input, Form, Button, InputRef } from "antd";
-import { FormEvent, useRef } from "react";
+import { Input, Form, Button, InputRef, message } from "antd";
+import { FormEvent, useEffect, useRef } from "react";
 import authService from "../services/AuthService";
 import { Link, useNavigate } from "react-router-dom";
+import { loginValidation } from "../utils/shared/globalFunctions";
 export default function Login() {
   const navigate = useNavigate();
   const emailRef = useRef<InputRef>(null);
   const passwordRef = useRef<InputRef>(null);
+  const isLogin = authService.isLoggedIn();
+
   type FieldType = {
     email?: string;
     password?: string;
   };
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const emailValue = emailRef.current?.input?.value;
     const passwordValue = passwordRef.current?.input?.value;
 
-    authService
-      .login({ email: emailValue!, password: passwordValue! })
-      .then((data) => {
-        localStorage.setItem("token", data.access_token);
-        navigate("/home");
-      });
+    const isValid = loginValidation(emailValue, passwordValue);
+
+    if (isValid) {
+      console.log(passwordValue);
+      authService
+        .login({ email: emailValue!, password: passwordValue! })
+        .then((data) => {
+          localStorage.setItem("token", data.access_token);
+          navigate("/home");
+        })
+        .catch(async () => {
+          message.error(`Error al iniciar sesión`, 5);
+        });
+    }
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/home");
+    }
+  }, [isLogin, navigate]);
 
   return (
     <div className="flex h-screen justify-center items-center">
@@ -50,7 +68,12 @@ export default function Login() {
                 label="Correo electronico"
                 style={{ fontWeight: "bold" }}
               ></Form.Item>
-              <Input style={{ marginTop: "-20px" }} ref={emailRef} />
+              <Input
+                style={{ marginTop: "-20px" }}
+                ref={emailRef}
+                type="email"
+                required
+              />
             </div>
             <div className="flex flex-col w-72">
               <Form.Item<FieldType>
@@ -60,6 +83,7 @@ export default function Login() {
               <Input.Password
                 style={{ marginTop: "-20px" }}
                 ref={passwordRef}
+                required
               />
             </div>
             <div className="flex flex-col w-72 justify-center items-center  mt-12">
@@ -73,7 +97,7 @@ export default function Login() {
                 </Button>
               </Form.Item>
             </div>
-            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute bottom-10">
+            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute bottom-0 sm:bottom-10">
               <p>
                 ¿No tienes una cuenta?
                 <span className="text-blue-500 underline">

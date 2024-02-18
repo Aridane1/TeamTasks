@@ -2,6 +2,7 @@ import { Button, Form, Input, InputRef } from "antd";
 import authService from "../services/AuthService";
 import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useRef } from "react";
+import { registerValidation } from "../utils/shared/globalFunctions";
 
 export default function Register() {
   const userNameRef = useRef<InputRef>(null);
@@ -22,16 +23,24 @@ export default function Register() {
     const emailValue = emailRef.current?.input?.value;
     const passwordValue = passwordRef.current?.input?.value;
 
-    authService
-      .register({
-        username: userNameValue!,
-        email: emailValue!,
-        password: passwordValue!,
-      })
-      .then((data) => {
-        localStorage.setItem("token", data.access_token);
-        navigate("/home");
-      });
+    const isValid = registerValidation(
+      emailValue,
+      passwordValue,
+      userNameValue
+    );
+
+    if (isValid) {
+      authService
+        .register({
+          username: userNameValue!,
+          email: emailValue!,
+          password: passwordValue!,
+        })
+        .then((data) => {
+          localStorage.setItem("token", data.access_token);
+          navigate("/home");
+        });
+    }
   };
 
   return (
@@ -60,14 +69,23 @@ export default function Register() {
                 label="Nombre de usuario"
                 style={{ fontWeight: "bold" }}
               ></Form.Item>
-              <Input style={{ marginTop: "-20px" }} ref={userNameRef} />
+              <Input
+                style={{ marginTop: "-20px" }}
+                ref={userNameRef}
+                required
+              />
             </div>
             <div className="flex flex-col w-72">
               <Form.Item<FieldType>
                 label="Correo electronico"
                 style={{ fontWeight: "bold" }}
               ></Form.Item>
-              <Input style={{ marginTop: "-20px" }} ref={emailRef} />
+              <Input
+                style={{ marginTop: "-20px" }}
+                ref={emailRef}
+                type="email"
+                required
+              />
             </div>
             <div className="flex flex-col w-72">
               <Form.Item<FieldType>
@@ -77,6 +95,7 @@ export default function Register() {
               <Input.Password
                 style={{ marginTop: "-20px" }}
                 ref={passwordRef}
+                required
               />
             </div>
             <div className="flex flex-col w-72 justify-center items-center  mt-12">
@@ -90,7 +109,7 @@ export default function Register() {
                 </Button>
               </Form.Item>
             </div>
-            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute bottom-10">
+            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute  bottom-0 sm:bottom-10">
               <p>
                 Ya tienes una cuenta?
                 <span className="text-blue-500 underline">
