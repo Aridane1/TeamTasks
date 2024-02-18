@@ -1,6 +1,6 @@
 {
-  "name": "Mi PWA",
-  "short_name": "PWA",
+  "name": "TeamTask",
+  "short_name": "TM",
   "icons": [
     {
       "src": "assets/images/icon/icono-144x144.png",

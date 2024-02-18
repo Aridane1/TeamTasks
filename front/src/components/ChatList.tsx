@@ -34,7 +34,7 @@ export const ChatList = ({
         </div>
         <div className="">
           <img
-            className="size-16 rounded-full object-cover"
+            className="size-16 rounded-full object-contain"
             src={`${backendImageEndpoint}/${image}`}
             alt={title}
           />

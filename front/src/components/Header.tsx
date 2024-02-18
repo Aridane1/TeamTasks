@@ -55,18 +55,32 @@ export default function Header() {
     <div className="flex h-[100px] items-center w-full border-b-2 border-black select-none">
       <div className="flex items-center justify-center sm:justify-between w-full sm:w-[90%] mx-auto ">
         <Link to={"/home"}>
-          <div className="flex items-center">
+          <div className="flex items-center ">
             <img
               className="size-24"
               src="/assets/images/TeamTaskRecortado.png"
             />
-            <p className="text-3xl font-semibold">TeamTask</p>
+            <p className="text-3xl font-semibold hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+              TeamTask
+            </p>
           </div>
         </Link>
         <div className="sm:flex gap-5 hidden items-center font-semibold">
-          <Link to={"/home"}>Incio</Link>
-          <Link to={"/createTask"}>Crear Tarea</Link>
-          <Link to={"/chatFeed"}>Chat</Link>
+          <Link to={"/home"}>
+            <p className="hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+              Incio
+            </p>
+          </Link>
+          <Link to={"/createTask"}>
+            <p className="hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+              Crear Tarea
+            </p>
+          </Link>
+          <Link to={"/chatFeed"}>
+            <p className="hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+              Chat
+            </p>
+          </Link>
           <Popover content={content} trigger="click">
             <img
               src="/assets/icons/profile.svg"

@@ -23,12 +23,12 @@ export function startWs(wss) {
 
     ws.on("message", (message) => {
       const parseMessage = JSON.parse(message);
-      console.log(parseMessage);
       if (parseMessage.type === MESSAGES.SEND_MESSAGES) {
         let newMessage = {
           task_id: taskRef.taskId,
           user_id: taskRef.userId,
           message: parseMessage.message,
+          username: parseMessage.username,
         };
 
         addMessage(newMessage).then(() => {

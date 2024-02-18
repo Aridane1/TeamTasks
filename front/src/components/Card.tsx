@@ -35,7 +35,7 @@ export const Card = ({
   return (
     <div className="max-w-sm w-96 rounded overflow-hidden shadow-lg hover:scale-105 transition ease-in-out duration-300 group select-none bg-yellow-200/60">
       <img
-        className="w-full h-52 object-cover rounded-b-2xl group-hover:scale-105 transition ease-in-out duration-[400ms] "
+        className="w-full h-52 object-cover rounded-b-2xl group-hover:scale-105 transition ease-in-out duration-[400ms]"
         src={`${backendImageEndpoint}/${image}`}
         alt={title}
         onClick={handleClick}
