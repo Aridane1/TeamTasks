@@ -41,7 +41,6 @@ export default function Chat() {
   const [textMessage, setTextMessage] = useState<string>("");
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [offlineMessages, setOfflineMessages] = useState([]);
-  const [chatMessages, setChatMessages] = useState([]);
 
   const location = useLocation();
   const params = useParams();
