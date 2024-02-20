@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "../components/Header";
+import { Header } from "../components/Header";
 import taskService from "../services/TaskService";
 import { ChatList } from "../components/ChatList";
 

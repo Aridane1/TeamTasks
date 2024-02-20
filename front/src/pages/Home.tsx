@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { FloatButton } from "antd";
 import { Card } from "../components/Card";
-import Header from "../components/Header";
 import taskService from "../services/TaskService";
+import { Header } from "../components/Header";
 
 export default function Home() {
   type TaskType = {

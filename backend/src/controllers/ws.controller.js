@@ -1,10 +1,12 @@
-import { addMessage } from "./comment.controller";
+import { addMessage, getAllMessagesByTaskId } from "./comment.controller";
 
 let wsServer = null;
 let tasks = {};
 
 const MESSAGES = {
   SEND_MESSAGES: "sendMessage",
+  GET_ALL_MESSAGES: "getAllMessages",
+  GET_LAST_MESSAGES: "getLastMessages",
 };
 
 export function startWs(wss) {
@@ -14,6 +16,7 @@ export function startWs(wss) {
 
     const taskId = url.get("task_id");
     const userId = url.get("user_id");
+
     if (!tasks[taskId]) {
       tasks[taskId] = [];
     }
@@ -23,6 +26,7 @@ export function startWs(wss) {
 
     ws.on("message", (message) => {
       const parseMessage = JSON.parse(message);
+
       if (parseMessage.type === MESSAGES.SEND_MESSAGES) {
         let newMessage = {
           task_id: taskRef.taskId,
@@ -33,17 +37,34 @@ export function startWs(wss) {
 
         addMessage(newMessage).then(() => {
           newMessage.type = "NEW_MESSAGE";
-          sendMessage(newMessage, taskRef.taskId);
+          tasks[taskId].forEach((element) => {
+            element.ws.send(JSON.stringify(newMessage));
+          });
+        });
+      }
+
+      if (parseMessage.type === MESSAGES.GET_ALL_MESSAGES) {
+        getAllMessagesByTaskId(taskId).then((data) => {
+          taskRef.ws.send(
+            JSON.stringify({
+              type: MESSAGES.GET_ALL_MESSAGES,
+              messages: JSON.stringify(data),
+            })
+          );
+        });
+      }
+      console.log(parseMessage);
+
+      if (parseMessage.type === MESSAGES.GET_LAST_MESSAGES) {
+        getAllMessagesByTaskId(taskId).then((data) => {
+          taskRef.ws.send(
+            JSON.stringify({
+              type: MESSAGES.GET_LAST_MESSAGES,
+              messages: JSON.stringify(data),
+            })
+          );
         });
       }
     });
   });
 }
-
-const sendMessage = (message, taskId) => {
-  if (tasks[taskId]) {
-    tasks[taskId].forEach((element) => {
-      element.ws.send(JSON.stringify(message));
-    });
-  }
-};

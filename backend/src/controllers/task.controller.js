@@ -8,11 +8,11 @@ export const addTaskWithPhoto = async (req, res) => {
         message: "La descripcion debe de ser de un maximo de 1500 caracteres",
       });
     }
-
+    console.log(req.file);
     req.body.task_image = req.file.filename;
     let task = Task(req.body);
-    console.log(task._id);
     await task.save();
+
     res.send({ message: task });
   } catch (err) {
     console.log(err);

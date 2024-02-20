@@ -40,7 +40,7 @@ export const Card = ({
         alt={title}
         onClick={handleClick}
       />
-      <div className="px-6 py-4 relative">
+      <div className="px-6 py-4 relative mt-2">
         <div className="absolute right-2 top-0">
           <DeleteOutlined
             className="cursor-pointer"
