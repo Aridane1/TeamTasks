@@ -14,6 +14,10 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
+    tag: {
+      type: String,
+      required: true,
+    },
     task_image: {
       type: String,
     },

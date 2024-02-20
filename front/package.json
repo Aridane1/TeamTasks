@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/camera": "^5.0.9",
+    "@capacitor/core": "^5.7.0",
     "antd": "^5.14.1",
     "axios": "^1.6.7",
     "jwt-decode": "^4.0.0",

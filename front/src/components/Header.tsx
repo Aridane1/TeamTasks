@@ -13,7 +13,7 @@ export default function Header() {
             <Link to={"/home"}>Incio</Link>
           </div>
           <div className="">
-            <Link to={"/home"}>Crear Tarea</Link>
+            <Link to={"/createTask"}>Crear Tarea</Link>
           </div>
           <div className="">
             <Link to={"/home"}>Chat</Link>
