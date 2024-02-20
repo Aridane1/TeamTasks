@@ -1,6 +1,5 @@
 import axios from "axios";
 import { backendTaskEnpoint } from "../constants/backendEndpoints";
-// import { backendTaskWithPhotoEnpoint } from "../constants/backendEndpoints";
 
 interface Task {
   title: string;
@@ -17,15 +16,6 @@ async function getAllTasks() {
     console.error("Error en TaskService", error);
   }
 }
-
-// async function addTask(task: Task) {
-//   try {
-//     const response = await axios.post(`${backendTaskWithPhotoEnpoint}`, task);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error en TaskService", error);
-//   }
-// }
 
 async function addTask(task: Task, blob: Blob|string) {
   try {

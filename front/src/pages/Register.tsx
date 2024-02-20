@@ -2,6 +2,7 @@ import { Button, Form, Input, InputRef } from "antd";
 import authService from "../services/AuthService";
 import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useRef } from "react";
+import { registerValidation } from "../utils/shared/globalFunctions";
 
 export default function Register() {
   const userNameRef = useRef<InputRef>(null);
@@ -22,28 +23,36 @@ export default function Register() {
     const emailValue = emailRef.current?.input?.value;
     const passwordValue = passwordRef.current?.input?.value;
 
-    authService
-      .register({
-        username: userNameValue!,
-        email: emailValue!,
-        password: passwordValue!,
-      })
-      .then((data) => {
-        localStorage.setItem("token", data.access_token);
-        navigate("/home");
-      });
+    const isValid = registerValidation(
+      emailValue,
+      passwordValue,
+      userNameValue
+    );
+
+    if (isValid) {
+      authService
+        .register({
+          username: userNameValue!,
+          email: emailValue!,
+          password: passwordValue!,
+        })
+        .then((data) => {
+          localStorage.setItem("token", data.access_token);
+          navigate("/home");
+        });
+    }
   };
 
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="flex flex-col sm:flex-row justify-center align-middle items-center sm:h-[500px] sm:w-[800px] w-[350px] mx-auto  rounded-lg shadow-2xl overflow-hidden">
-        <div className="flex flex-col justify-center items-center w-[400px] bg-red-500 h-full">
+        <div className="flex flex-col justify-center items-center w-[400px] bg-orange-400/70 h-full">
           <h1 className="flex font-bold text-6xl h-24 justify-center mt-5">
             TeamTask
           </h1>
           <img
             className="size-52 sm:size-80 -mt-10"
-            src="/images/TeamTaskRecortado.png"
+            src="/assets/images/TeamTaskRecortado.png"
             alt="Logo"
           />
         </div>
@@ -67,7 +76,11 @@ export default function Register() {
                 label="Correo electronico"
                 style={{ fontWeight: "bold" }}
               ></Form.Item>
-              <Input style={{ marginTop: "-20px" }} ref={emailRef} />
+              <Input
+                style={{ marginTop: "-20px" }}
+                ref={emailRef}
+                type="email"
+              />
             </div>
             <div className="flex flex-col w-72">
               <Form.Item<FieldType>
@@ -90,7 +103,7 @@ export default function Register() {
                 </Button>
               </Form.Item>
             </div>
-            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute bottom-10">
+            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute  bottom-0 sm:bottom-10">
               <p>
                 Ya tienes una cuenta?
                 <span className="text-blue-500 underline">

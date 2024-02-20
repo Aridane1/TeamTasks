@@ -3,9 +3,9 @@ import Device from "../models/device.model";
 export const addDevice = async (req, res) => {
   try {
     let deviceUser = {
-      endpoint: req.body.subscription.endpoint,
-      keys: req.body.subscription.keys,
-      user_id: req.body.user_id,
+      endpoint: req.body.subscription.subscription.endpoint,
+      keys: req.body.subscription.subscription.keys,
+      user_id: req.body.subscription.user_id,
     };
     let device = Device(deviceUser);
     await device.save();

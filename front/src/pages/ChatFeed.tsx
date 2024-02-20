@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { FloatButton } from "antd";
-import { Card } from "../components/Card";
-import taskService from "../services/TaskService";
 import { Header } from "../components/Header";
+import taskService from "../services/TaskService";
+import { ChatList } from "../components/ChatList";
 
-export default function Home() {
+export default function ChatFeed() {
   type TaskType = {
     _id: string;
     task_image: string;
-    title: string;
-    description: string;
     quantityUser: string;
+    title: string;
   };
   const [tasks, setTasks] = useState<TaskType[]>([]);
 
@@ -33,18 +31,15 @@ export default function Home() {
       <div className="flex justify-center mt-10 flex-wrap gap-5 mb-20 w-[90%] mx-auto ">
         {tasks.length !== 0
           ? tasks.map((task) => (
-              <Card
-                id={task._id}
+              <ChatList
                 title={task.title}
-                description={task.description}
-                image={task.task_image}
-                quantityUser={task.quantityUser}
                 key={task._id}
+                id={task._id}
+                quantityUser={task.quantityUser}
+                image={task.task_image}
               />
             ))
-          : "No tienes tareas"}
-
-        <FloatButton.BackTop />
+          : "No tienes chats"}
       </div>
     </div>
   );

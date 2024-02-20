@@ -1,4 +1,4 @@
-import { defineConfig, createServer as createViteServer } from "vite";
+import { defineConfig } from "vite";
 import https from "https";
 import fs from "fs";
 import { VitePWA } from "vite-plugin-pwa";
@@ -38,12 +38,9 @@ export default defineConfig({
   },
 });
 
-export const createServer = (options) => {
-  return https.createServer(
-    {
-      key: fs.readFileSync("./.cert/cert.key"),
-      cert: fs.readFileSync("./.cert/cert.crt"),
-    },
-    createViteServer(options)
-  );
+export const createViteServer = () => {
+  return https.createServer({
+    key: fs.readFileSync("./.cert/cert.key"),
+    cert: fs.readFileSync("./.cert/cert.crt"),
+  });
 };
