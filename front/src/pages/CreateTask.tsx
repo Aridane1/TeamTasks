@@ -1,4 +1,3 @@
-import Header from "../components/Header";
 import { FormEvent, useRef, useState } from "react";
 import TaskService from "../services/TaskService";
 import PhotoService from "../services/PhotoService";
@@ -6,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
 import type { UploadFile } from "antd";
+import { Header } from "../components/Header";
 export default function CreateTask() {
   const fileList: UploadFile[] = [];
   const title = useRef<HTMLInputElement>(null);
@@ -16,34 +16,32 @@ export default function CreateTask() {
   const tokenDecoded = jwtDecode(token) as { id: string };
   const userIdDecoded = tokenDecoded.id;
   const [image, setImage] = useState<Blob | string>("");
-  
+
   const handlePickImage = async () => {
     try {
       const photo = await PhotoService.pickImage();
-      
+
       const response = await fetch(photo.webPath);
-      const blob = await response.blob()
-      setImage(blob)
+      const blob = await response.blob();
+      setImage(blob);
     } catch (error) {
-      console.error('Error al seleccionar la imagen:', error);
+      console.error("Error al seleccionar la imagen:", error);
     }
   };
-  
- 
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  
+
     const Task = {
-      "title": title.current?.value ?? "",
-      "description" : description.current?.value ?? "",
-      "limit_day" : limit_day.current?.value ?? "",
-      "tag" : tag.current?.value ?? "",
-      "userId": userIdDecoded,
+      title: title.current?.value ?? "",
+      description: description.current?.value ?? "",
+      limit_day: limit_day.current?.value ?? "",
+      tag: tag.current?.value ?? "",
+      userId: userIdDecoded,
     };
-  
+
     try {
-      if(image!=null)
-      await TaskService.addTask(Task, image ); 
+      if (image != null) await TaskService.addTask(Task, image);
       console.log("Tarea creada");
     } catch (error) {
       console.error("Error al crear la tarea", error);
@@ -85,7 +83,7 @@ export default function CreateTask() {
         <select className="border-1 text-2xl border-gray-300 rounded-full p-2 m-2 w-80 h-14 md:w-full">
           <option>Hola</option>
         </select> */}
-              {/* <Upload
+          {/* <Upload
         action="handlePickImage"
         listType="picture"
         defaultFileList={[...fileList]}
@@ -93,22 +91,18 @@ export default function CreateTask() {
         <Button icon={<UploadOutlined />}>Upload</Button>
 
       </Upload> */}
-      <button color="primary" type="button" onClick={handlePickImage} >
-       
-       Pick an image
-     </button>
+          <button color="primary" type="button" onClick={handlePickImage}>
+            Pick an image
+          </button>
 
-     <button
+          <button
             className="mt-8 border-2 border-gray-300 p-2 m-2 rounded-full text-4xl text-white bg-navbar"
             type="submit"
           >
             Crear Tarea
           </button>
-
-
         </form>
       </div>
-
     </>
   );
 }
