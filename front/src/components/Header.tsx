@@ -2,7 +2,7 @@ import { Popover } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/AuthService";
 
-export default function Header() {
+export const Header = () => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -44,7 +44,7 @@ export default function Header() {
           alt="cerrar sesion"
           className="size-4"
         />
-        <span className="text-black hover:text-blue-300 transition-colors duration-300">
+        <span className="text-black hover:text-blue-300 transition-colors duration-300 cursor-pointer">
           Cerrar sesión
         </span>
       </div>
@@ -60,24 +60,24 @@ export default function Header() {
               className="size-24"
               src="/assets/images/TeamTaskRecortado.png"
             />
-            <p className="text-3xl font-semibold hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+            <p className="text-3xl font-semibold hover:text-yellow-600/60  hover:scale-105 transition ease-in-out duration-200">
               TeamTask
             </p>
           </div>
         </Link>
         <div className="sm:flex gap-5 hidden items-center font-semibold">
           <Link to={"/home"}>
-            <p className="hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
               Incio
             </p>
           </Link>
           <Link to={"/createTask"}>
-            <p className="hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 t hover:scale-105 transition ease-in-out duration-200">
               Crear Tarea
             </p>
           </Link>
           <Link to={"/chatFeed"}>
-            <p className="hover:text-yellow-600/60 transition-colors ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 t hover:scale-105 transition ease-in-out duration-200">
               Chat
             </p>
           </Link>
@@ -92,4 +92,4 @@ export default function Header() {
       </div>
     </div>
   );
-}
+};

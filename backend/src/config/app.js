@@ -10,6 +10,7 @@ import tagRouter from "../routes/tag.routes";
 import tagTaskRouter from "../routes/tagTask.routes";
 import userTaskRouter from "../routes/userTask.routes";
 import deviceRouter from "../routes/device.routes";
+import messageRouter from "../routes/message.routes";
 
 import verifyToken from "../middlewares/verifyToken.middleware";
 import "./webpushConfig";
@@ -39,6 +40,7 @@ app.use("/api/tag", tagRouter);
 app.use("/api/tagTask", tagTaskRouter);
 app.use("/api/userTask", userTaskRouter);
 app.use("/api/device", deviceRouter);
+app.use("/api/message", messageRouter);
 // deleteSchemas();
 
 export default app;

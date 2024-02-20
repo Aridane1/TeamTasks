@@ -11,3 +11,20 @@
 
 //   // deviceService.postDevice(subscription);
 // }
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/serviceWorker.js", { type: "module" })
+      .then(
+        function (registration) {
+          console.log(
+            "Service worker registered! with scope: ",
+            registration.scope
+          );
+        },
+        function (err) {
+          console.log("serviceWorker registration failed: ", err);
+        }
+      );
+  });
+}

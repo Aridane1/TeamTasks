@@ -11,3 +11,5 @@ export const backendTaskEnpoint = `${backendEnpoint}/api/task`;
 export const backendUserTaskEnpoint = `${backendEnpoint}/api/userTask`;
 
 export const backendDeviceEnpoint = `${backendEnpoint}/api/device`;
+
+export const backendMessageEnpoint = `${backendEnpoint}/api/message`;
