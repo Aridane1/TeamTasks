@@ -3,24 +3,35 @@ import UserTask from "../models/userTask.model";
 
 export const addTaskWithPhoto = async (req, res) => {
   try {
+    
     if (req.body.description.length > 1500) {
       return res.status(400).send({
         message: "La descripcion debe de ser de un maximo de 1500 caracteres",
       });
     }
-
+    
     req.body.task_image = req.file.filename;
-    let task = Task(req.body);
-    console.log(task._id);
-    await task.save();
-    res.send({ message: task });
+    
+    let task = new Task(req.body);
+    let savedTask = await task.save();
+    let userTask = new UserTask({
+      task_id: savedTask._id,
+      user_id: req.body.userId,
+    });
+    let savedUserTask = await userTask.save();
+    res.send({
+      message: "Tarea y UserTask creados exitosamente",
+      task: savedTask,
+      userTask: savedUserTask,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      message: "Hubo un error al guardar",
+      message: "Hubo un error al guardar la tarea o el UserTask",
     });
   }
 };
+
 
 export const getOneTask = async (req, res) => {
   try {
@@ -38,6 +49,7 @@ export const getOneTask = async (req, res) => {
   }
 };
 
+
 export const getAllTasks = async (req, res) => {
   try {
     let tasks = await Task.find();
@@ -52,6 +64,7 @@ export const getAllTasks = async (req, res) => {
     });
   }
 };
+
 
 export const deleteOneTask = async (req, res) => {
   try {
@@ -77,6 +90,7 @@ export const deleteOneTask = async (req, res) => {
     });
   }
 };
+
 
 export const putOneTask = async (req, res) => {
   try {

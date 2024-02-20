@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Header from "../components/Header";
+import { Header } from "../components/Header";
 import { backendImageEndpoint } from "../constants/backendEndpoints";
 
 export default function ViewTask() {
