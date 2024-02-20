@@ -40,6 +40,7 @@ export default function Home() {
                 image={task.task_image}
                 quantityUser={task.quantityUser}
                 key={task._id}
+                getAllTasksOfTheUser={getAllTasksOfTheUser}
               />
             ))
           : "No tienes tareas"}

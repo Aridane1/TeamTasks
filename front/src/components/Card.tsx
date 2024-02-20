@@ -9,12 +9,14 @@ export const Card = ({
   description,
   image,
   quantityUser,
+  getAllTasksOfTheUser,
 }: {
   id: string;
   title: string;
   description: string;
   image: string;
   quantityUser: string;
+  getAllTasksOfTheUser: () => void;
 }) => {
   const navigate = useNavigate();
 
@@ -29,7 +31,9 @@ export const Card = ({
     });
   };
   const deleteTask = (id: { id: string }) => {
-    taskService.deleteTaskUser(id).then(() => {});
+    taskService.deleteTaskUser(id).then(() => {
+      getAllTasksOfTheUser();
+    });
   };
 
   return (

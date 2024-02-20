@@ -2,12 +2,8 @@ import { FormEvent, useRef, useState } from "react";
 import TaskService from "../services/TaskService";
 import PhotoService from "../services/PhotoService";
 import { jwtDecode } from "jwt-decode";
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Upload } from "antd";
-import type { UploadFile } from "antd";
 import { Header } from "../components/Header";
 export default function CreateTask() {
-  const fileList: UploadFile[] = [];
   const title = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
   const limit_day = useRef<HTMLInputElement>(null);
