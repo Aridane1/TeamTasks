@@ -1,5 +1,7 @@
 import axios from "axios";
 import { backendTaskEnpoint } from "../constants/backendEndpoints";
+import { decodeToken } from "../utils/shared/globalFunctions";
+import { backendUserTaskEnpoint } from "../../../frontend/src/constants/backendEnpoints";
 
 interface Task {
   title: string;
@@ -36,7 +38,27 @@ async function addTask(task: Task, blob: Blob | string) {
   }
 }
 
+async function getUserTask() {
+  try {
+    const user = decodeToken();
+    const response = await axios.get(`${backendUserTaskEnpoint}/${user.id}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+async function deleteTaskUser({ id }: { id: string }) {
+  try {
+    const response = await axios.delete(`${backendTaskEnpoint}/${id}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default {
+  getUserTask,
+  deleteTaskUser,
   getAllTasks,
   addTask,
 };
