@@ -40,7 +40,6 @@ export default function Chat() {
 
   const [textMessage, setTextMessage] = useState<string>("");
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const [offlineMessages, setOfflineMessages] = useState([]);
 
   const location = useLocation();
   const params = useParams();
@@ -173,13 +172,6 @@ export default function Chat() {
   }, [user.id, taskId]);
 
   useEffect(() => {
-    if (!navigator.onLine) {
-      const offlineMessages = JSON.parse(
-        localStorage.getItem("offline-messages") ?? ""
-      );
-      setOfflineMessages(offlineMessages || []);
-    }
-
     const handleMessageFromServiceWorker = (event: MessageEvent) => {
       if (event.data.type === "sync-message") {
         message.loading(
@@ -188,7 +180,6 @@ export default function Chat() {
         );
         const messages = JSON.parse(localStorage.getItem("chatMessages") ?? "");
         updateMessages(messages[messages.length - 1]._id);
-        setOfflineMessages([]);
         localStorage.setItem("offlineMessages", JSON.stringify([]));
       }
     };
