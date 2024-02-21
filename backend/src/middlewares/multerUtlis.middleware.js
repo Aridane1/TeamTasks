@@ -9,6 +9,7 @@ const storage = multer.diskStorage({
     if (file.mimetype == "image/gif") fileType = "gif";
     if (file.mimetype == "image/png") fileType = "png";
     if (file.mimetype == "image/jpg") fileType = "jpg";
+    if (file.mimetype == "image/jpeg") fileType = "jpg";
     if (file.mimetype == "image/svg") fileType = "svg";
     cb(null, "image-" + Date.now() + "." + fileType);
   },

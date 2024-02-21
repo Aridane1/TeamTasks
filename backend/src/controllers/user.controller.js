@@ -58,6 +58,7 @@ export const deleteOneUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
+    console.log(users);
     res.status(200).send(users);
   } catch (err) {
     console.log(err);

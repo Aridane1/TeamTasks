@@ -1,0 +1,13 @@
+{
+    "name": "users-script",
+    "scope": "template",
+    "shortid": "1D0Zce-BCp",
+    "creationDate": {
+        "$$date": 1708542638303
+    },
+    "modificationDate": {
+        "$$date": 1708544037704
+    },
+    "_id": "Wd90dxVdZWzMTpmD",
+    "$entitySet": "scripts"
+}

@@ -32,9 +32,26 @@ export const Header = () => {
     getConfigurationUser();
   }, []);
 
+  const contentStatistics = (
+    <div className="flex flex-col">
+      <a href="http://localhost:5488/templates/5BXyudmZj" target="_blank">
+        Reporte mensajes
+      </a>
+      <a href="http://localhost:5488/templates/ddfoPE1bu" target="_blank">
+        Reporte grafica
+      </a>
+      <a href="http://localhost:5488/templates/vvn7EwGdA" target="_blank">
+        Reporte tabla tareas
+      </a>
+      <a href="http://localhost:5488/templates/MqzcNaR-p" target="_blank">
+        Reporte usuarios
+      </a>
+    </div>
+  );
+
   const content = (
     <div className="flex flex-col px-4 gap-y-2 ">
-      <Link to={"/statistics"}>
+      <Popover content={contentStatistics} trigger="click" placement="leftTop">
         <div className="flex items-center gap-2">
           <img
             src="/assets/icons/chart-simple-solid.svg"
@@ -45,8 +62,7 @@ export const Header = () => {
             Estadisticas
           </span>
         </div>
-      </Link>
-
+      </Popover>
       <Link to={"/settings"}>
         <div className="flex items-center gap-2">
           <img
@@ -93,12 +109,12 @@ export const Header = () => {
             </p>
           </Link>
           <Link to={"/createTask"}>
-            <p className="hover:text-yellow-600/60 t hover:scale-105 transition ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
               Crear Tarea
             </p>
           </Link>
           <Link to={"/chatFeed"}>
-            <p className="hover:text-yellow-600/60 t hover:scale-105 transition ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
               Chat
             </p>
           </Link>

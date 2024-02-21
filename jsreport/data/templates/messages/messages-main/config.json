@@ -1,0 +1,22 @@
+{
+    "name": "messages-main",
+    "engine": "handlebars",
+    "recipe": "chrome-pdf",
+    "shortid": "5BXyudmZj",
+    "chrome": {
+        "printBackground": true
+    },
+    "creationDate": {
+        "$$date": 1708544214944
+    },
+    "modificationDate": {
+        "$$date": 1708547205461
+    },
+    "_id": "P6CFzrwWONR3Q5gA",
+    "$entitySet": "templates",
+    "scripts": [
+        {
+            "shortid": "3t4YGCwHH3"
+        }
+    ]
+}

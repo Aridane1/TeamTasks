@@ -70,17 +70,18 @@ export const putConfigurationForUserPhoto = async (req, res) => {
     let userImage = await Configuration.findOne({ user_id: userId }).select(
       "user_image"
     );
-
-    let imagePath = path.join(
-      __dirname,
-      "../public/images",
-      userImage.user_image
-    );
-
-    fs.unlinkSync(imagePath);
+    let imagePath = null;
+    if (userImage.user_image !== "") {
+      let imagePath = path.join(
+        __dirname,
+        "../public/images",
+        userImage.user_image
+      );
+      fs.unlinkSync(imagePath);
+    }
     req.body.user_image = req.file.filename;
 
-    await Configuration.findOneAndReplace({ user_id: userId }, req.body);
+    await Configuration.findOneAndUpdate({ user_id: userId }, req.body);
     return res
       .status(200)
       .send({ message: "Configuración actualizada correctamente" });

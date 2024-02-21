@@ -1,5 +1,7 @@
 import Task from "../models/task.model";
 import UserTask from "../models/userTask.model";
+import fs from "fs";
+import path from "path";
 
 export const addTaskWithPhoto = async (req, res) => {
   try {
@@ -101,12 +103,17 @@ export const deleteOneTask = async (req, res) => {
 
 export const putOneTask = async (req, res) => {
   try {
-    if (req.body.description.length > 1500) {
-      return res.status(400).send({
-        message: "La descripcion debe de ser de un maximo de 1500 caracteres",
-      });
-    }
     let { id } = req.params;
+    let taskImage = await Task.findById(id).select("task_image");
+
+    let imagePath = path.join(
+      __dirname,
+      "../public/images",
+      taskImage.task_image
+    );
+    fs.unlinkSync(imagePath);
+    req.body.task_image = req.file.filename;
+
     await Task.findByIdAndUpdate(id, req.body);
     res.status(200).send({
       message: "Registro actualizado correctamente",

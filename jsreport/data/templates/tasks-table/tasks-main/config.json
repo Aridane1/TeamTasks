@@ -1,0 +1,22 @@
+{
+    "name": "tasks-main",
+    "engine": "handlebars",
+    "recipe": "chrome-pdf",
+    "shortid": "vvn7EwGdA",
+    "chrome": {
+        "printBackground": true
+    },
+    "creationDate": {
+        "$$date": 1708535626248
+    },
+    "modificationDate": {
+        "$$date": 1708543876987
+    },
+    "_id": "9GUhLNGrb8ApH5K9",
+    "$entitySet": "templates",
+    "scripts": [
+        {
+            "shortid": "76GF8gNdnk"
+        }
+    ]
+}
