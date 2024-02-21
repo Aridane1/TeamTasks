@@ -1,7 +1,7 @@
 import axios from "axios";
 import { backendTaskEnpoint } from "../constants/backendEndpoints";
 import { decodeToken } from "../utils/shared/globalFunctions";
-import { backendUserTaskEnpoint } from "../../../frontend/src/constants/backendEnpoints";
+import { backendUserTaskEnpoint } from "../constants/backendEndpoints";
 
 interface Task {
   title: string;
