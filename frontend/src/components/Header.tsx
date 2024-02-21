@@ -4,6 +4,7 @@ import { Popover } from "antd";
 import authService from "../services/AuthService";
 import configurationService from "../services/ConfigurationService";
 import { backendImageEndpoint } from "../constants/backendEndpoints";
+import { MenuOutlined } from "@ant-design/icons";
 
 export const Header = () => {
   type Configuration = {
@@ -87,10 +88,44 @@ export const Header = () => {
       </div>
     </div>
   );
+  const contentResponsive = (
+    <div className="flex flex-col px-4 gap-y-2 ">
+      <Link to={"/home"}>
+        <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
+          Incio
+        </p>
+      </Link>
+      <Link to={"/createTask"}>
+        <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
+          Crear Tarea
+        </p>
+      </Link>
+      <Link to={"/chatFeed"}>
+        <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
+          Chat
+        </p>
+      </Link>
+      <Popover content={contentStatistics} trigger="click" placement="leftTop">
+        <span className="text-black hover:text-blue-300 transition-colors duration-300">
+          Estadisticas
+        </span>
+      </Popover>
+      <Link to={"/settings"}>
+        <span className="text-black hover:text-blue-300 transition-colors duration-300">
+          Configuración
+        </span>
+      </Link>
+      <div onClick={handleLogOut} className="flex items-center gap-2">
+        <span className="text-black hover:text-blue-300 transition-colors duration-300 cursor-pointer">
+          Cerrar sesión
+        </span>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex h-[100px] items-center w-full border-b-2 border-black select-none">
-      <div className="flex items-center justify-center sm:justify-between w-full sm:w-[90%] mx-auto ">
+      <div className="flex items-center justify-between sm:justify-between  w-[90%] mx-auto ">
         <Link to={"/home"}>
           <div className="flex items-center ">
             <img
@@ -132,6 +167,11 @@ export const Header = () => {
                 className="cursor-pointer size- rounded-full size-10"
               />
             )}
+          </Popover>
+        </div>
+        <div className="flex gap-5 sm:hidden items-center font-semibold">
+          <Popover content={contentResponsive} trigger="click">
+            <MenuOutlined className="text-2xl" />
           </Popover>
         </div>
       </div>
