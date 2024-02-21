@@ -5,8 +5,8 @@ import { backendUserTaskEnpoint } from "../../../frontend/src/constants/backendE
 
 interface Task {
   title: string;
-  description: string;
-  limit_day?: string;
+  description: string | undefined;
+  limit_day?: string | null;
   tag?: string;
   userId: string;
 }
@@ -19,11 +19,11 @@ async function getAllTasks() {
   }
 }
 
-async function addTask(task: Task, blob: Blob | string) {
+async function addTask(task: Task, blob: Blob) {
   try {
     const formData = new FormData();
     formData.append("title", task.title);
-    formData.append("description", task.description);
+    formData.append("description", task.description ?? "");
     formData.append("limit_day", task.limit_day ?? "");
     formData.append("tag", task.tag ?? "");
     formData.append("userId", task.userId);
