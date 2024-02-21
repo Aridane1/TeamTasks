@@ -1,4 +1,5 @@
 import UserTask from "../models/userTask.model";
+import User from "../models/user.model";
 
 export const addUserTask = async (req, res) => {
   try {
@@ -75,6 +76,45 @@ export const getAllUserTask = async (req, res) => {
       return res.status(404).send("No hay tareas de usuarios registradas aún.");
     }
     return res.send(userTask);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      message: "Hubo un error al mostrar las tareas de los usuarios",
+    });
+  }
+};
+
+export const getAllUserTaskCount = async (req, res) => {
+  try {
+    const userTasksResults = await UserTask.aggregate([
+      {
+        $group: {
+          _id: "$user_id",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const userIds = userTasksResults.map((result) => result._id);
+
+    const users = await User.find({ _id: { $in: userIds } });
+
+    const userTasks = userTasksResults.map((result) => {
+      const user = users.find(
+        (u) => u._id.toString() === result._id.toString()
+      );
+      return {
+        username: user.username,
+        count: result.count,
+      };
+    });
+
+    console.log(userTasks);
+
+    if (!userTasks) {
+      return res.status(404).send("No hay tareas de usuarios registradas aún.");
+    }
+    return res.send(userTasks);
   } catch (err) {
     console.log(err);
     res.status(500).send({

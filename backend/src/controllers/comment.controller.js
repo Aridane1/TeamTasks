@@ -38,3 +38,13 @@ export const getAllMessagesByTaskId = async (taskId) => {
     console.log(err);
   }
 };
+
+export const getAllMessagesForUser = async (req, res) => {
+  try {
+    let comments = await Comment.find();
+    console.log(comments);
+    res.send(comments);
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -1,0 +1,16 @@
+{
+    "name": "messages-script",
+    "scope": "template",
+    "shortid": "3t4YGCwHH3",
+    "creationDate": {
+        "$$date": 1708544245452
+    },
+    "modificationDate": {
+        "$$date": 1708547341877
+    },
+    "_id": "UCSYj0tEPYZoRQpD",
+    "$entitySet": "scripts",
+    "entitySet": "scripts",
+    "type": "entity",
+    "key": "UCSYj0tEPYZoRQpD"
+}

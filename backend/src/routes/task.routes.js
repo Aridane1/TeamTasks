@@ -3,6 +3,7 @@ import {
   addTaskWithPhoto,
   deleteOneTask,
   getAllTasks,
+  getAllTasksExpireInFiveDay,
   getOneTask,
   putOneTask,
 } from "../controllers/task.controller";
