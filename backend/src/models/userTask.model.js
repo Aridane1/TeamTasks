@@ -12,6 +12,10 @@ const userTaskSchema = new Schema(
       ref: "Tasks",
       required: true,
     },
+    rol: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
