@@ -1,4 +1,5 @@
 import User from "../models/user.model";
+import Configuration from "../models/configuration.model";
 import bcrypt from "bcryptjs";
 import { generateToken, getCleanUser } from "../utils/jwtUtils";
 
@@ -21,6 +22,16 @@ export const addUser = async (req, res) => {
     let user = User(newUser);
     await user.save();
     const token = generateToken(user);
+
+    let defaultConf = {
+      list_mode: false,
+      night_mode: false,
+      user_image: "",
+      user_id: user._id,
+    };
+
+    let conf = Configuration(defaultConf);
+    await conf.save();
 
     res.status(200).send({ user: user, access_token: token });
   } catch (err) {

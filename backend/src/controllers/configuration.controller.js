@@ -1,4 +1,6 @@
 import Configuration from "../models/configuration.model";
+import fs from "fs";
+import path from "path";
 
 export const addConfiguration = async (req, res) => {
   try {
@@ -44,7 +46,41 @@ export const deleteConfigurationForUser = async (req, res) => {
 export const putConfigurationForUser = async (req, res) => {
   try {
     let { userId } = req.params;
-    await Configuration.findOneAndUpdate({ user_id: userId });
+    let userImage = await Configuration.findOne({ user_id: userId }).select(
+      "user_image"
+    );
+    req.body.user_image = userImage.user_image;
+    console.log(userImage);
+    await Configuration.findOneAndReplace({ user_id: userId }, req.body);
+    return res
+      .status(200)
+      .send({ message: "Configuración actualizada correctamente" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      message: "Hubo un error al guardar la configuración",
+    });
+  }
+};
+
+export const putConfigurationForUserPhoto = async (req, res) => {
+  try {
+    let { userId } = req.params;
+
+    let userImage = await Configuration.findOne({ user_id: userId }).select(
+      "user_image"
+    );
+
+    let imagePath = path.join(
+      __dirname,
+      "../public/images",
+      userImage.user_image
+    );
+
+    fs.unlinkSync(imagePath);
+    req.body.user_image = req.file.filename;
+
+    await Configuration.findOneAndReplace({ user_id: userId }, req.body);
     return res
       .status(200)
       .send({ message: "Configuración actualizada correctamente" });
