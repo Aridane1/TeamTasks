@@ -9,12 +9,16 @@ export const Card = ({
   description,
   image,
   quantityUser,
+  rol,
+  getAllTasksOfTheUser,
 }: {
   id: string;
   title: string;
   description: string;
   image: string;
   quantityUser: string;
+  rol: string;
+  getAllTasksOfTheUser: () => void;
 }) => {
   const navigate = useNavigate();
 
@@ -29,7 +33,9 @@ export const Card = ({
     });
   };
   const deleteTask = (id: { id: string }) => {
-    taskService.deleteTaskUser(id).then(() => {});
+    taskService.deleteTaskUser(id).then(() => {
+      getAllTasksOfTheUser();
+    });
   };
 
   return (
@@ -42,10 +48,14 @@ export const Card = ({
       />
       <div className="px-6 py-4 relative mt-2">
         <div className="absolute right-2 top-0">
-          <DeleteOutlined
-            className="cursor-pointer"
-            onClick={() => deleteTask({ id })}
-          />
+          {rol === "admin" ? (
+            <DeleteOutlined
+              className="cursor-pointer"
+              onClick={() => deleteTask({ id })}
+            />
+          ) : (
+            ""
+          )}
         </div>
         <div className="" onClick={handleClick}>
           <div className="font-bold text-xl mb-2">{title}</div>

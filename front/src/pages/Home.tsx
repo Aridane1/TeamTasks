@@ -11,6 +11,7 @@ export default function Home() {
     title: string;
     description: string;
     quantityUser: string;
+    rol: string;
   };
   const [tasks, setTasks] = useState<TaskType[]>([]);
 
@@ -40,6 +41,8 @@ export default function Home() {
                 image={task.task_image}
                 quantityUser={task.quantityUser}
                 key={task._id}
+                rol={task.rol}
+                getAllTasksOfTheUser={getAllTasksOfTheUser}
               />
             ))
           : "No tienes tareas"}

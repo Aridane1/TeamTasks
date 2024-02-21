@@ -38,13 +38,17 @@ export const notifyDeadlineApproaching = async (currentDay) => {
 };
 
 const calculateDaysRemaining = (currentDay, limitDay) => {
-  const [day, month, year] = limitDay.split("-");
-  const deadlineDate = new Date(`${year}-${month}-${day}`);
+  if (typeof currentDay === "string") {
+    currentDay = new Date(currentDay);
+  }
 
-  const timeDifference = deadlineDate.getTime() - currentDay.getTime();
+  if (typeof limitDay === "string") {
+    limitDay = new Date(limitDay);
+  }
+
+  const timeDifference = limitDay.getTime() - currentDay.getTime();
 
   const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-
   return daysRemaining;
 };
 
