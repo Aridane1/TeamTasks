@@ -1,107 +1,118 @@
+import { Button, Form, Input, InputRef } from "antd";
+import authService from "../services/AuthService";
+import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useRef } from "react";
-import AuthService from "../services/AuthService";
-import { useNavigate } from "react-router-dom";
+import { registerValidation } from "../utils/shared/globalFunctions";
 
 export default function Register() {
-  const username = useRef<HTMLInputElement>(null);
-  const email = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
+  const userNameRef = useRef<InputRef>(null);
+  const emailRef = useRef<InputRef>(null);
+  const passwordRef = useRef<InputRef>(null);
+
   const navigate = useNavigate();
+  type FieldType = {
+    username?: string;
+    email?: string;
+    password?: string;
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const userUsername = username.current?.value ?? "";
-    const userEmail = email.current?.value ?? "";
-    const userPassword = password.current?.value ?? "";
 
-    AuthService.register({
-      username: userUsername,
-      email: userEmail,
-      password: userPassword,
-    })
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error en el registro", error);
-      });
+    const userNameValue = userNameRef.current?.input?.value;
+    const emailValue = emailRef.current?.input?.value;
+    const passwordValue = passwordRef.current?.input?.value;
+
+    const isValid = registerValidation(
+      emailValue,
+      passwordValue,
+      userNameValue
+    );
+
+    if (isValid) {
+      authService
+        .register({
+          username: userNameValue!,
+          email: emailValue!,
+          password: passwordValue!,
+        })
+        .then((data) => {
+          localStorage.setItem("token", data.access_token);
+          navigate("/home");
+        });
+    }
   };
 
   return (
-    <div className="h-screen">
-      <div className="md:hidden flex flex-col items-center">
-        <h1 className="text-8xl mt-14">Registro</h1>
-        <img
-          className="size-48 mt-10"
-          src="images/TeamTaskRecortado.png"
-          alt="Team Task Logo"
-        />
-        <form className="flex flex-col w-fit mt-10" onSubmit={handleSubmit}>
-          <label className="text-3xl my-2">Nombre de usuario</label>
-          <input
-            className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-            type="text"
-            ref={username}
+    <div className="flex h-screen justify-center items-center">
+      <div className="flex flex-col sm:flex-row justify-center align-middle items-center sm:h-[500px] sm:w-[800px] w-[350px] mx-auto  rounded-lg shadow-2xl overflow-hidden">
+        <div className="flex flex-col justify-center items-center w-[400px] bg-orange-400/70 h-full">
+          <h1 className="flex font-bold text-6xl h-24 justify-center mt-5">
+            TeamTask
+          </h1>
+          <img
+            className="size-52 sm:size-80 -mt-10"
+            src="/assets/images/TeamTaskRecortado.png"
+            alt="Logo"
           />
-          <label className="text-3xl my-2">Correo</label>
-          <input
-            className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-            type="email"
-            ref={email}
-          />
-          <label className="text-3xl my-2">Contraseña</label>
-          <input
-            className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-            type="password"
-            ref={password}
-          />
-          <button
-            className="mt-8 border-2 border-gray-300 p-2 m-2 rounded-full text-4xl text-white bg-navbar"
-            type="submit"
-          >
-            Registrarse
-          </button>
+        </div>
+        <form
+          className="flex flex-col w-[400px] relative h-full bg-slate-300"
+          onSubmit={handleSubmit}
+        >
+          <h1 className=" flex font-bold text-5xl h-24 justify-center mt-5">
+            Registrarte
+          </h1>
+          <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col w-72">
+              <Form.Item<FieldType>
+                label="Nombre de usuario"
+                style={{ fontWeight: "bold" }}
+              ></Form.Item>
+              <Input style={{ marginTop: "-20px" }} ref={userNameRef} />
+            </div>
+            <div className="flex flex-col w-72">
+              <Form.Item<FieldType>
+                label="Correo electronico"
+                style={{ fontWeight: "bold" }}
+              ></Form.Item>
+              <Input
+                style={{ marginTop: "-20px" }}
+                ref={emailRef}
+                type="email"
+              />
+            </div>
+            <div className="flex flex-col w-72">
+              <Form.Item<FieldType>
+                label="Contraseña"
+                style={{ fontWeight: "bold" }}
+              ></Form.Item>
+              <Input.Password
+                style={{ marginTop: "-20px" }}
+                ref={passwordRef}
+              />
+            </div>
+            <div className="flex flex-col w-72 justify-center items-center  mt-12">
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ backgroundColor: "blue" }}
+                >
+                  Registrarse
+                </Button>
+              </Form.Item>
+            </div>
+            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute  bottom-0 sm:bottom-10">
+              <p>
+                Ya tienes una cuenta?
+                <span className="text-blue-500 underline">
+                  <Link to="/login">Iniciar sesión</Link>
+                </span>
+              </p>
+            </div>
+          </div>
         </form>
-      </div>
-
-      <div className=" hidden md:flex w-full h-full  items-center justify-between">
-        <div className="w-[50%] h-full flex items-center justify-center">
-        <img
-          
-          src="images/TeamTaskRecortado.png"
-          alt="Team Task Logo"
-        />
-        </div>
-        <div className="flex flex-col items-center h-full w-2/4 justify-center">
-          <h1 className="text-8xl mt-14">Registro</h1>
-
-          <form className="flex flex-col w-fit mt-10" onSubmit={handleSubmit}>
-            <label className="text-3xl my-2">Nombre de usuario</label>
-            <input
-              className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-              type="text"
-              ref={username}
-            />
-            <label className="text-3xl my-2">Correo</label>
-            <input
-              className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-              type="email"
-              ref={email}
-            />
-            <label className="text-3xl my-2">Contraseña</label>
-            <input
-              className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-              type="password"
-              ref={password}
-            />
-            <button
-              className="mt-8 border-2 border-gray-300 p-2 m-2 rounded-full text-4xl text-white bg-navbar"
-              type="submit"
-            >
-              Registrarse
-            </button>
-          </form>
-        </div>
       </div>
     </div>
   );

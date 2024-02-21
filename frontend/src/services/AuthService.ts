@@ -1,28 +1,19 @@
 import axios from "axios";
-import { backendAuthEnpoint } from "../constants/backendEnpoints";
+import { backendAuthEnpoint } from "../constants/backendEndpoints";
 
-interface User {
-  username?: string;
-  email: string;
-  password: string;
-}
-
-function getOptions(user: User) {
-  console.log(user);
+function getOptions(user: { email: string; password: string }) {
   const base64UserAndPassword = window.btoa(user.email + ":" + user.password);
 
   const basicAccess = "Basic " + base64UserAndPassword;
   const options = {
     headers: {
       Authorization: basicAccess,
-      "Content-Type": "application/json",
     },
   };
-
   return options;
 }
 
-async function login(user: User) {
+async function login(user: { email: string; password: string }) {
   try {
     const response = await axios.post(
       `${backendAuthEnpoint}/signin`,
@@ -35,11 +26,15 @@ async function login(user: User) {
   }
 }
 
-async function register(user: User) {
+async function register(user: {
+  email: string;
+  password: string;
+  username: string;
+}) {
   try {
     const response = await axios.post(
       `${backendAuthEnpoint}`,
-      user.username,
+      { username: user.username },
       getOptions(user)
     );
     return response.data;
@@ -61,5 +56,4 @@ async function logout() {
   localStorage.removeItem("token");
   return;
 }
-
 export default { login, register, isLoggedIn, logout };

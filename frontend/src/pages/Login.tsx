@@ -1,105 +1,110 @@
-import { FormEvent, useRef } from "react";
-import AuthService from "../services/AuthService";
-import { useNavigate } from "react-router-dom";
-
+import { Input, Form, Button, InputRef, message } from "antd";
+import { FormEvent, useEffect, useRef } from "react";
+import authService from "../services/AuthService";
+import { Link, useNavigate } from "react-router-dom";
+import { loginValidation } from "../utils/shared/globalFunctions";
 export default function Login() {
-  const emailMobile = useRef<HTMLInputElement>(null);
-  const passwordMobile = useRef<HTMLInputElement>(null);
-  const emailDesktop = useRef<HTMLInputElement>(null);
-  const passwordDesktop = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const emailRef = useRef<InputRef>(null);
+  const passwordRef = useRef<InputRef>(null);
+  const isLogin = authService.isLoggedIn();
 
-  const handleSubmitMovil = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const userEmail = emailMobile.current?.value ?? "";
-    const userPassword = passwordMobile.current?.value ?? "";
-    AuthService.login({
-      email: userEmail,
-      password: userPassword,
-    }).then((data) => {
-      localStorage.setItem("token", data.access_token);
-      navigate("/home");
-    });
+  type FieldType = {
+    email?: string;
+    password?: string;
   };
 
-  const handleSubmitDescktop = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const userEmail = emailDesktop.current?.value ?? "";
-    const userPassword = passwordDesktop.current?.value ?? "";
-    AuthService.login({
-      email: userEmail,
-      password: userPassword,
-    }).then((data) => {
-      localStorage.setItem("token", data.access_token);
-      navigate("/home");
-    });
+
+    const emailValue = emailRef.current?.input?.value;
+    const passwordValue = passwordRef.current?.input?.value;
+
+    const isValid = loginValidation(emailValue, passwordValue);
+
+    if (isValid) {
+      console.log(passwordValue);
+      authService
+        .login({ email: emailValue!, password: passwordValue! })
+        .then((data) => {
+          localStorage.setItem("token", data.access_token);
+          navigate("/home");
+        })
+        .catch(async () => {
+          message.error(`Error al iniciar sesión`, 5);
+        });
+    }
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/home");
+    }
+  }, [isLogin, navigate]);
 
   return (
-    <div className="h-screen">
-      <div className="flex flex-col items-center md:hidden">
-        <h1 className="text-8xl mt-14">Inicio</h1>
-        <img className="size-48 mt-10" src="images/TeamTaskRecortado.png" />
-        <div>
-          <form
-            className="flex flex-col w-fit mt-16"
-            onSubmit={handleSubmitMovil}
-          >
-            <label className="text-3xl my-3">Correo electrónico</label>
-            <input
-              className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-              type="text"
-              ref={emailMobile}
-            />
-            <label className="text-3xl my-3">Contraseña</label>
-            <input
-              className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-              type="password"
-              ref={passwordMobile}
-            />
-            <button
-              className="mt-20 border-2 border-gray-300 p-2 m-2 rounded-full text-4xl text-white bg-navbar"
-              type="submit"
-            >
-              Iniciar
-            </button>
-          </form>
+    <div className="flex h-screen justify-center items-center">
+      <div className="flex flex-col sm:flex-row justify-center align-middle items-center sm:h-[500px] sm:w-[800px] w-[350px] mx-auto  rounded-lg shadow-2xl overflow-hidden">
+        <div className="flex flex-col justify-center items-center w-[400px] bg-orange-400/70 h-full">
+          <h1 className="flex font-bold text-6xl h-24 justify-center mt-5">
+            TeamTask
+          </h1>
+          <img
+            className="size-52 sm:size-80 -mt-10"
+            src="/assets/images/TeamTaskRecortado.png"
+            alt="Logo"
+          />
         </div>
-      </div>
-
-      <div className=" hidden md:flex w-full h-full  items-center justify-between">
-        <div className="w-[50%] h-full flex items-center justify-center">
-          <img src="images/TeamTaskRecortado.png" />
-        </div>
-        <div className="flex flex-col items-center h-full w-2/4 justify-center">
-          <h1 className="text-8xl mt-14">Inicio</h1>
-
-          <div>
-            <form
-              className="flex flex-col w-fit mt-16"
-              onSubmit={handleSubmitDescktop}
-            >
-              <label className="text-3xl my-3">Correo electrónico</label>
-              <input
-                className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-                type="text"
-                ref={emailDesktop}
+        <form
+          className="flex flex-col w-[400px] relative h-full bg-slate-300"
+          onSubmit={handleSubmit}
+        >
+          <h1 className=" flex font-bold text-5xl h-24 justify-center mt-5">
+            Login
+          </h1>
+          <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col w-72">
+              <Form.Item<FieldType>
+                label="Correo electronico"
+                style={{ fontWeight: "bold" }}
+              ></Form.Item>
+              <Input
+                style={{ marginTop: "-20px" }}
+                ref={emailRef}
+                type="email"
               />
-              <label className="text-3xl my-3">Contraseña</label>
-              <input
-                className="border-1 border-gray-300 rounded-full p-2 m-2 w-80 h-14"
-                type="password"
-                ref={passwordDesktop}
+            </div>
+            <div className="flex flex-col w-72">
+              <Form.Item<FieldType>
+                label="Contraseña"
+                style={{ fontWeight: "bold" }}
+              ></Form.Item>
+              <Input.Password
+                style={{ marginTop: "-20px" }}
+                ref={passwordRef}
               />
-              <button
-                className="mt-20 border-2 border-gray-300 p-2 m-2 rounded-full text-4xl text-white bg-navbar"
-                type="submit"
-              >
-                Iniciar
-              </button>
-            </form>
+            </div>
+            <div className="flex flex-col w-72 justify-center items-center  mt-12">
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ backgroundColor: "blue" }}
+                >
+                  Iniciar sesión
+                </Button>
+              </Form.Item>
+            </div>
+            <div className="flex flex-col w-72 justify-center items-center  mt-12 text-sm absolute bottom-0 sm:bottom-10">
+              <p>
+                ¿No tienes una cuenta?
+                <span className="text-blue-500 underline">
+                  <Link to="/register">Registrarse</Link>
+                </span>
+              </p>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
