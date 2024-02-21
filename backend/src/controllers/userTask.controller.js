@@ -38,18 +38,21 @@ export const getAllUserTaskByUserId = async (req, res) => {
       "task_id"
     );
     let taskIds = userTasks.map((userTask) => userTask.task_id);
-
     taskIds = taskIds.map((task) => task.toObject({ getters: true }));
 
     for (const task of taskIds) {
       let taskId = task._id;
-
+      let userTask = userTasks.find((ut) => ut.task_id._id.equals(taskId));
+      if (userTask) {
+        task.rol = userTask.rol;
+      }
       let quantityUser = await UserTask.countDocuments({
         task_id: taskId,
       });
 
       task.quantityUser = quantityUser;
     }
+    console.log(taskIds);
 
     if (!userTasks) {
       return res

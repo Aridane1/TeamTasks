@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import TaskService from "../services/TaskService";
 import { Header } from "../components/Header";
 import {
@@ -7,6 +7,7 @@ import {
   Form,
   Input,
   InputRef,
+  Select,
   Upload,
   message,
 } from "antd";
@@ -15,6 +16,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import { UploadRef } from "antd/es/upload/Upload";
 import { decodeToken } from "../utils/shared/globalFunctions";
 import { UploadChangeParam } from "antd/es/upload";
+import userService from "../services/UserService";
+import { SizeType } from "antd/es/config-provider/SizeContext";
 
 export default function CreateTask() {
   const title = useRef<InputRef>(null);
@@ -23,7 +26,12 @@ export default function CreateTask() {
   const tag = useRef<InputRef>(null);
   const uploadRef = useRef<UploadRef>(null);
   const [image, setImage] = useState<Blob | null>(null);
-
+  const [users, setUsers] = useState<{ username: string; _id: string }[]>();
+  const [usersIds, setUsersIds] = useState<{ _id: string }[]>();
+  const [size, setSize] = useState<SizeType>();
+  const [options, setOptions] = useState<{ value: string; label: string }[]>(
+    []
+  );
   const user = decodeToken();
 
   const handleDateChange = (date: Date | null) => {
@@ -38,6 +46,12 @@ export default function CreateTask() {
     setImage(blob);
   };
 
+  const handleChange = (value: string | string[]) => {
+    if (Array.isArray(value)) {
+      setUsersIds(value.map((userId: string) => ({ _id: userId })));
+    }
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const limit_day = selectedDate?.toISOString() ?? null; // Convierte a string ISO
@@ -48,6 +62,8 @@ export default function CreateTask() {
       limit_day: limit_day,
       tag: tag.current?.input?.value ?? "",
       userId: user.id,
+      usersIds: usersIds,
+      rol: "admin",
     };
 
     if (image != null)
@@ -59,6 +75,34 @@ export default function CreateTask() {
           message.error("Error al crear la tarea");
         });
   };
+
+  const getAllUser = () => {
+    userService
+      .getAllUsers()
+      .then((response: { username: string; _id: string }) => {
+        if (Array.isArray(response)) {
+          setUsers(response);
+          if (response.length <= 4) setSize("small");
+          if (response.length >= 5 && response.length <= 10) setSize("middle");
+          if (response.length >= 11) setSize("large");
+        }
+      });
+  };
+
+  useEffect(() => {
+    getAllUser();
+  }, []);
+
+  useEffect(() => {
+    const newOptions =
+      users
+        ?.filter((userData) => userData._id !== user.id)
+        .map((userData) => ({
+          value: userData._id,
+          label: userData.username,
+        })) || [];
+    setOptions(newOptions);
+  }, [users, user.id]);
 
   return (
     <>
@@ -101,7 +145,24 @@ export default function CreateTask() {
             ></Form.Item>
             <Input className="w-52 sm:w-full -mt-6" ref={tag} />
           </div>
-
+          <div className="flex items-center mt-5  w-full">
+            <Form.Item
+              label="Colaboradores"
+              style={{ fontWeight: "bold" }}
+            ></Form.Item>
+            {options.length > 0 ? (
+              <Select
+                mode="multiple"
+                size={size}
+                placeholder="Please select"
+                onChange={handleChange}
+                className="w-52 sm:w-full -mt-6"
+                options={options}
+              />
+            ) : (
+              ""
+            )}
+          </div>
           <Upload
             listType="picture"
             ref={uploadRef}
@@ -112,7 +173,7 @@ export default function CreateTask() {
             </Button>
           </Upload>
 
-          <div className=" mt-10">
+          <div className=" my-5">
             <Button className="bg-blue-500" type="primary" htmlType="submit">
               Crear Tarea
             </Button>

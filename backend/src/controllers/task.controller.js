@@ -9,14 +9,27 @@ export const addTaskWithPhoto = async (req, res) => {
       });
     }
     req.body.task_image = req.file.filename;
-
     let task = new Task(req.body);
     let savedTask = await task.save();
+
     let userTask = new UserTask({
       task_id: savedTask._id,
       user_id: req.body.userId,
+      rol: req.body.rol,
     });
     let savedUserTask = await userTask.save();
+
+    let usersIds = JSON.parse(req.body.usersIds);
+
+    for (let user of usersIds) {
+      let userTaskColaborator = new UserTask({
+        task_id: savedTask._id,
+        user_id: user._id,
+        rol: "colaborator",
+      });
+      await userTaskColaborator.save();
+    }
+
     res.send({
       message: "Tarea y UserTask creados exitosamente",
       task: savedTask,

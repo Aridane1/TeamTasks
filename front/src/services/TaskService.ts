@@ -9,6 +9,12 @@ interface Task {
   limit_day?: string | null;
   tag?: string;
   userId: string;
+  usersIds:
+    | {
+        _id: string;
+      }[]
+    | undefined;
+  rol: string;
 }
 async function getAllTasks() {
   try {
@@ -27,6 +33,8 @@ async function addTask(task: Task, blob: Blob) {
     formData.append("limit_day", task.limit_day ?? "");
     formData.append("tag", task.tag ?? "");
     formData.append("userId", task.userId);
+    formData.append("usersIds", JSON.stringify(task.usersIds));
+    formData.append("rol", task.rol);
     formData.append("file", blob);
     const response = await axios.post(
       `${backendTaskEnpoint}/taskPhoto`,
@@ -34,7 +42,7 @@ async function addTask(task: Task, blob: Blob) {
     );
     return response.data;
   } catch (error) {
-    console.error("Error en TaskService", error);
+    console.log("Error en TaskService", error);
   }
 }
 
