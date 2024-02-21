@@ -1,15 +1,36 @@
-import { Popover } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Popover } from "antd";
 import authService from "../services/AuthService";
+import configurationService from "../services/ConfigurationService";
+import { backendImageEndpoint } from "../constants/backendEndpoints";
 
 export const Header = () => {
+  type Configuration = {
+    user_image: string;
+  };
   const navigate = useNavigate();
+
+  const [configuration, setConfiguration] = useState<Configuration>();
+
+  const getConfigurationUser = async () => {
+    try {
+      const response = await configurationService.getConfigurationByUser();
+      setConfiguration(response.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleLogOut = () => {
     authService.logout().then(() => {
       navigate("/login");
     });
   };
+
+  useEffect(() => {
+    getConfigurationUser();
+  }, []);
 
   const content = (
     <div className="flex flex-col px-4 gap-y-2 ">
@@ -82,11 +103,19 @@ export const Header = () => {
             </p>
           </Link>
           <Popover content={content} trigger="click">
-            <img
-              src="/assets/icons/profile.svg"
-              alt="ver información del perfil"
-              className="cursor-pointer size- rounded-full"
-            />
+            {configuration?.user_image === "" ? (
+              <img
+                src="/assets/icons/profile.svg"
+                alt="ver información del perfil"
+                className="cursor-pointer size- rounded-full"
+              />
+            ) : (
+              <img
+                src={`${backendImageEndpoint}/${configuration?.user_image}`}
+                alt="ver información del perfil"
+                className="cursor-pointer size- rounded-full size-10"
+              />
+            )}
           </Popover>
         </div>
       </div>
