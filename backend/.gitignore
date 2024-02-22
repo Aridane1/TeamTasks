@@ -6,3 +6,4 @@ src/.cert/
 
 install-key.pem
 install.pem
+coverage/

@@ -5,7 +5,7 @@
 .cert/
 install-key.pem
 install.pem
-
+coverage/
 # Logs
 logs
 *.log
