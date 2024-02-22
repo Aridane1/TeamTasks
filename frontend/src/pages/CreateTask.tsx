@@ -1,4 +1,3 @@
-
 import { FormEvent, useEffect, useRef, useState } from "react";
 import TaskService from "../services/TaskService";
 import { Header } from "../components/Header";
@@ -108,17 +107,18 @@ export default function CreateTask() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center dark:text-white">
         <h1 className="text-6xl mt-6">Tareas</h1>
         <form
-          className="flex flex-col w-fit mt-10 md:w-3/6 md:items-center "
+          className="flex flex-col w-fit mt-10 md:w-3/6 md:items-center  "
           onSubmit={handleSubmit}
         >
-          <div className="sm:flex w-full gap-5">
+          <div className="sm:flex w-full gap-5 ">
             <div className="w-96 flex sm:block items-center">
               <Form.Item
                 label="Titulo"
                 style={{ fontWeight: "bold" }}
+                className="dark:text-white"
               ></Form.Item>
               <Input className="w-52 sm:w-full -mt-9" ref={title} />
             </div>
