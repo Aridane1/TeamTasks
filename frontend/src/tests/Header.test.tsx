@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Header from "../components/Header"; // Asegúrate de que la ruta al componente Header sea correcta
+import {Header} from "../components/Header"; // Asegúrate de que la ruta al componente Header sea correcta
 import "@testing-library/jest-dom";
 import * as ReactRouterDom from "react-router-dom"; // Importa todo desde react-router-dom
 
