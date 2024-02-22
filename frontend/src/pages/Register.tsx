@@ -8,7 +8,8 @@ export default function Register() {
   const userNameRef = useRef<InputRef>(null);
   const emailRef = useRef<InputRef>(null);
   const passwordRef = useRef<InputRef>(null);
-
+  const body = document.querySelector("body");
+  body!.style.backgroundColor = "#FFF7EA";
   const navigate = useNavigate();
   type FieldType = {
     username?: string;

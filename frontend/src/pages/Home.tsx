@@ -13,10 +13,12 @@ export default function Home() {
     title: string;
     description: string;
     quantityUser: string;
+    tag: string;
     rol: string;
   };
   type Configuration = {
     list_mode: boolean;
+    night_mode: boolean;
   };
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [configuration, setConfiguration] = useState<Configuration>();
@@ -24,6 +26,7 @@ export default function Home() {
   const getAllTasksOfTheUser = async () => {
     try {
       const response = await taskService.getUserTask();
+      console.log(response);
       setTasks(response);
     } catch (error) {
       console.error(error);
@@ -33,8 +36,18 @@ export default function Home() {
   const getConfigurationUser = async () => {
     try {
       const response = await configurationService.getConfigurationByUser();
+      const html = document.querySelector("html");
+      const body = document.querySelector("body");
+
+      if (response?.message.night_mode) {
+        html!.classList.add("dark");
+        body!.style.backgroundColor = "#3e3d3a";
+      } else {
+        html!.classList.remove("dark");
+        body!.style.backgroundColor = "#FFF7EA";
+      }
+
       setConfiguration(response.message);
-      console.log(response.message);
     } catch (error) {
       console.error(error);
     }
@@ -60,6 +73,7 @@ export default function Home() {
                     image={task.task_image}
                     key={task._id}
                     rol={task.rol}
+                    tag={task.tag}
                     quantityUser={task.quantityUser}
                     getAllTasksOfTheUser={getAllTasksOfTheUser}
                   />
@@ -68,6 +82,7 @@ export default function Home() {
                 return (
                   <Card
                     id={task._id}
+                    tag={task.tag}
                     title={task.title}
                     description={task.description}
                     image={task.task_image}

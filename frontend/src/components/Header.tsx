@@ -132,24 +132,24 @@ export const Header = () => {
               className="size-24"
               src="/assets/images/TeamTaskRecortado.png"
             />
-            <p className="text-3xl font-semibold hover:text-yellow-600/60  hover:scale-105 transition ease-in-out duration-200">
+            <p className="text-3xl font-semibold hover:text-yellow-600/60 dark:hover:text-yellow-200 hover:scale-105 transition ease-in-out duration-200 dark:text-white">
               TeamTask
             </p>
           </div>
         </Link>
         <div className="sm:flex gap-5 hidden items-center font-semibold">
           <Link to={"/home"}>
-            <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
-              Incio
+            <p className="hover:text-yellow-600/60 dark:hover:text-yellow-200 dark:text-white hover:scale-105 transition ease-in-out duration-200">
+              Inicio
             </p>
           </Link>
           <Link to={"/createTask"}>
-            <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 dark:hover:text-yellow-200 dark:text-white hover:scale-105 transition ease-in-out duration-200">
               Crear Tarea
             </p>
           </Link>
           <Link to={"/chatFeed"}>
-            <p className="hover:text-yellow-600/60 hover:scale-105 transition ease-in-out duration-200">
+            <p className="hover:text-yellow-600/60 dark:hover:text-yellow-200 dark:text-white hover:scale-105 transition ease-in-out duration-200">
               Chat
             </p>
           </Link>

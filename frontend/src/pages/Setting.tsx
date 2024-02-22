@@ -118,6 +118,15 @@ export default function Setting() {
       ...prevConfiguration,
       night_mode: checked,
     }));
+    const html = document.querySelector("html");
+    const body = document.querySelector("body");
+    if (checked) {
+      html!.classList.add("dark");
+      body!.style.backgroundColor = "#3e3d3a";
+    } else {
+      html!.classList.remove("dark");
+      body!.style.backgroundColor = "#FFF7EA";
+    }
     configurationService
       .putConfigurationByUser({
         night_mode: checked,

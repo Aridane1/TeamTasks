@@ -9,6 +9,8 @@ export default function Login() {
   const passwordRef = useRef<InputRef>(null);
   const isLogin = authService.isLoggedIn();
 
+  const body = document.querySelector("body");
+  body!.style.backgroundColor = "#FFF7EA";
   type FieldType = {
     email?: string;
     password?: string;

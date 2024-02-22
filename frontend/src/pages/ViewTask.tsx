@@ -5,7 +5,7 @@ import { backendImageEndpoint } from "../constants/backendEndpoints";
 
 export default function ViewTask() {
   const location = useLocation();
-  const { title, description, image, quantityUser } = location.state || {};
+  const { title, description, image, quantityUser, tag } = location.state || {};
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -19,7 +19,7 @@ export default function ViewTask() {
   return (
     <div>
       <Header />
-      <div className="flex mt-20 justify-center items-center bg-yellow-100 max-w-[1200px] mx-auto rounded-xl shadow">
+      <div className="flex mt-20 justify-center items-center bg-yellow-100 dark:bg-[#16282E]/70 max-w-[1200px] mx-auto rounded-xl shadow">
         <div className="w-full flex mx-auto mt-5">
           <div className="w-[800px] ">
             <div className="relative flex justify-center">
@@ -33,14 +33,14 @@ export default function ViewTask() {
                 onMouseLeave={handleMouseLeave}
               />
               {isHovered && (
-                <p className="absolute top-[50%] translate-y-[-50%]">
-                  #html #css #js
-                </p>
+                <p className="absolute top-[50%] translate-y-[-50%]">{tag} </p>
               )}
             </div>
-            <p className="ml-12 mt-2">{quantityUser} usuarios</p>
+            <p className="ml-12 mt-2 dark:text-white">
+              {quantityUser} usuarios
+            </p>
           </div>
-          <div className="w-full flex flex-col gap-y-8">
+          <div className="w-full flex flex-col gap-y-8 dark:text-white">
             <h1 className="text-6xl">{title}</h1>
             <p>{description}</p>
           </div>
