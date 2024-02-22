@@ -191,7 +191,7 @@ export default function Chat() {
 
   return (
     <div>
-      <div className="h-16 flex items-center justify-center bg-yellow-100 fixed w-full top-0 z-10">
+      <div className="h-16 flex items-center justify-center bg-yellow-100 dark:bg-gray-800 dark:text-white fixed w-full top-0 z-10">
         <p className="text-3xl">{title} Chat</p>
       </div>
 

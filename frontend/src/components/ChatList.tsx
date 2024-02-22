@@ -24,13 +24,13 @@ export const ChatList = ({
 
   return (
     <div
-      className="w-[300px] bg-yellow-200/60 rounded-md cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-yellow-200 transition duration-500 ease-in-out select-none"
+      className="w-[300px] bg-yellow-200/60 rounded-md cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-yellow-200 transition duration-500 ease-in-out select-none dark:bg-[#16282E]/80"
       onClick={handleClick}
     >
       <div className="flex justify-between p-4 items-center">
         <div className="">
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <p>Participantes: {quantityUser}</p>
+          <h1 className="text-2xl font-bold dark:text-white">{title}</h1>
+          <p className="dark:text-white">Participantes: {quantityUser}</p>
         </div>
         <div className="">
           <img
