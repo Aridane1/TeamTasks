@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js --exec babel-node",
-    "test": "jest --coverage"
+    "test": "cross-env NODE_ENV=test jest --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +30,7 @@
     "@shelf/jest-mongodb": "^4.2.0",
     "chai": "^5.0.3",
     "chai-http": "^4.4.0",
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "mocha": "^10.2.0",
     "mongodb-memory-server": "^9.1.6",

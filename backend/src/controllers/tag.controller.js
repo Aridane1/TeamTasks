@@ -4,7 +4,7 @@ export const addTag = async (req, res) => {
   try {
     let tag = Tag(req.body);
     await tag.save();
-    res.send({ message: tag });
+   return res.send({ message: tag });
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -73,3 +73,32 @@ export const putOneTag = async (req, res) => {
     });
   }
 };
+
+describe("getAllTasks Controller", () => {
+  beforeAll(async () => {
+    // Asegúrate de que no haya tareas en la base de datos antes de la prueba
+    await Task.deleteMany({});
+  });
+
+  it("should return an empty array when no tasks are present", async () => {
+    // Mock de req y res
+    const req = {};
+    const res = {
+      send: jest.fn(),
+      status: jest.fn(() => res),
+    };
+
+    // Llama al controlador
+    await getAllTasks(req, res);
+
+    // Verifica que la respuesta sea un arreglo vacío
+    expect(res.send).toHaveBeenCalledWith([]);
+    // Verifica que el estado HTTP no sea 404, ya que la respuesta esperada para una colección vacía no debería ser un error
+    expect(res.status).not.toHaveBeenCalledWith(404);
+  });
+
+  // Opcional: después de todas las pruebas, cierra la conexión a la base de datos si es necesario
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+});

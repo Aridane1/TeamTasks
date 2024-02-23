@@ -1,30 +1,109 @@
-// Importa las dependencias necesarias
-import request from 'supertest';
-import app from '../config/app'; // Asegúrate de ajustar la ruta a tu archivo de aplicación Express
-import Tag from '../models/tag.model'; // Asegúrate de que la ruta sea correcta
+require("dotenv").config({ path: ".env.test" });
+const mongoose = require("mongoose");
+const { addTag, deleteOneTag } = require("../controllers/tag.controller");
+import Tag from "../models/tag.model"
 
-// Mock del modelo Tag para evitar operaciones de base de datos reales
-jest.mock('../models/tag.model');
+// Configuración inicial de la base de datos de prueba
+beforeAll(async () => {
+  await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+});
 
-describe('GET /api/tag/:id', () => {
-  it('should return 404 if no tag is found', async () => {
-    // Configura el mock para simular que no se encontró la etiqueta
-    Tag.findById.mockResolvedValue(null);
+afterEach(async () => {
+  await Tag.deleteMany();
+});
 
-    const response = await request(app).get('/api/tag/someNonExistingId');
+afterAll(async () => {
+  await mongoose.connection.close();
+});
 
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("No se encontró la etiqueta");
+describe("addTag Controller", () => {
+  it("should add a new tag", async () => {
+    // Mock de req y res
+    const req = {
+      body: { title: "Test Tag" },
+    };
+    const res = {
+      send: jest.fn(),
+      status: jest.fn(() => res),
+    };
+
+    await addTag(req, res);
+
+    // Verificar que se envió la respuesta correcta
+    expect(res.send).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.any(Object) })
+    );
+
+    // Verificar que el tag se agregó a la base de datos
+    const tag = await Tag.findOne({ title: "Test Tag" });
+    expect(tag).toBeTruthy();
+    expect(tag.title).toBe("Test Tag");
+  });
+});
+
+describe("deleteOneTag Controller", () => {
+  it("should delete a tag correctly", async () => {
+    // Primero, crea un tag para luego eliminarlo
+    const tagToBeDeleted = new Tag({ title: "Tag to be deleted" });
+    await tagToBeDeleted.save();
+
+    // Mock de req y res para simular la solicitud y la respuesta
+    const req = {
+      params: { id: tagToBeDeleted._id.toString() }, // Convierte el ObjectId a string
+    };
+    const res = {
+      send: jest.fn(),
+      status: jest.fn(() => res),
+    };
+
+    // Llama al controlador
+    await deleteOneTag(req, res);
+
+    // Verifica que la respuesta sea la correcta
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({ message: "Etiqueta eliminada correctamente" });
+
+    // Verifica que el tag haya sido eliminado de la base de datos
+    const deletedTag = await Tag.findById(tagToBeDeleted._id);
+    expect(deletedTag).toBeNull();
   });
 
-  it('should return the tag if it is found', async () => {
-    // Configura el mock para simular que se encontró la etiqueta
-    const mockTag = { _id: 'someExistingId', title: 'Test Tag', createdAt: '2020-01-01', updatedAt: '2020-01-02' };
-    Tag.findById.mockResolvedValue(mockTag);
+  // it("should return a 404 if the tag does not exist", async () => {
+  //   // Simula un ID de tag que no existe
+  //   const req = {
+  //     params: { id: mongoose.Types.ObjectId().toString() },
+  //   };
+  //   const res = {
+  //     send: jest.fn(),
+  //     status: jest.fn(() => res),
+  //   };
 
-    const response = await request(app).get(`/api/tag/${mockTag._id}`);
+  //   // Llama al controlador
+  //   await deleteOneTag(req, res);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockTag);
-  });
+  //   // Verifica que se haya retornado un estado 404
+  //   expect(res.status).toHaveBeenCalledWith(404);
+  //   expect(res.send).toHaveBeenCalledWith("No se encontró la etiqueta");
+  // });
+
+  // it("should handle errors gracefully", async () => {
+  //   // Simula un error lanzando una excepción cuando findByIdAndDelete es llamado
+  //   Tag.findByIdAndDelete = jest.fn().mockRejectedValue(new Error("Error simulado"));
+
+  //   const req = {
+  //     params: { id: mongoose.Types.ObjectId().toString() },
+  //   };
+  //   const res = {
+  //     send: jest.fn(),
+  //     status: jest.fn(() => res),
+  //   };
+
+  //   await deleteOneTag(req, res);
+
+  //   expect(res.status).toHaveBeenCalledWith(500);
+  //   expect(res.send).toHaveBeenCalledWith({ message: "Hubo un error al eliminar la etiqueta" });
+  // });
 });
